@@ -1,5 +1,5 @@
 class Api::ProfilesController < ApplicationController
-  skip_before_action :authenticate, on: :create
+  skip_before_action :authenticate, only: :create
 
   private
   def build_resource
