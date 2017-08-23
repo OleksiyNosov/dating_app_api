@@ -3,7 +3,6 @@ class Api::ProfilesController < ApplicationController
 
   private
   def build_resource
-    puts "resourse_params: #{ resource_params }"
     @user = User.new resource_params
   end
 
