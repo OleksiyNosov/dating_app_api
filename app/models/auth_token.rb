@@ -1,5 +1,5 @@
 class AuthToken < ApplicationRecord
-  belonds_to :user
+  belongs_to :user
 
-  validates :value, uniqueness: true
+  validates :value, presence: true, uniqueness: true
 end
