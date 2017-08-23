@@ -3,6 +3,10 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :verify_authenticity_token, if: :json_request?
 
+  before_action :authenticate
+
+  attr_reader :current_user
+
   rescue_from ActiveRecord::RecordInvalid, ActiveModel::StrictValidationFailed do
     render :errors, status: :unprocessable_entity
   end
@@ -24,7 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   def update
-    resource.update!
+    resource.update! resource_params
   end
 
   def destroy
@@ -32,6 +36,12 @@ class ApplicationController < ActionController::Base
   end
 
   private
+  def authenticate
+    authenticate_or_request_with_http_token do |token, options|
+      @current_user = User.joins(:auth_tokens).find_by(auth_tokens: { value: token })
+    end
+  end
+
   def json_request?
     request.format.json?
   end
