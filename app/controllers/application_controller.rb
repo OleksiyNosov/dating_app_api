@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
+  helper_method :resource, :collection
+
   skip_before_action :verify_authenticity_token, if: :json_request?
 
   before_action :authenticate
@@ -9,16 +11,6 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordInvalid, ActiveModel::StrictValidationFailed do
     render :errors, status: :unprocessable_entity
-  end
-
-  helper_method :resource, :collection
-
-  def index
-    collection
-  end
-
-  def show
-    resource
   end
 
   def create
@@ -33,6 +25,8 @@ class ApplicationController < ActionController::Base
 
   def destroy
     resource.destroy!
+
+    head :no_content
   end
 
   private
