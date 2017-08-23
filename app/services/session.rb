@@ -1,18 +1,17 @@
 class Session
   include ActiveModel::Validations
-  include Draper::Decorator
 
   attr_reader :email, :password, :user
 
   def initialize params
-    @user     = params['user']
-    @email    = params['email']
-    @password = params['password']
+    @user     = params[:user]
+    @email    = params[:email]
+    @password = params[:password]
   end
 
   validate do |model|
     model.errors.add :email, 'not found' unless user
-    model.errors.add :password 'is invalid' unless user.authenticate password    
+    model.errors.add :password, 'is invalid' unless user&.authenticate password    
   end
 
   def save!
@@ -29,6 +28,15 @@ class Session
     user&.auth_tokens&.last
   end
 
+  def as_json *args
+    { auth_token: auth_token }
+  end
+
+  def decorate
+    self
+  end
+
+  private
   def user
     @user ||= User.find_by email: email
   end
