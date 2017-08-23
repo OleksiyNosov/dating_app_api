@@ -1,5 +1,5 @@
 class Api::ProfilesController < ApplicationController
-  skip_before_action :verify_authenticity_token, on: :create
+  skip_before_action :authenticate, on: :create
 
   private
   def build_resource
@@ -7,7 +7,7 @@ class Api::ProfilesController < ApplicationController
   end
 
   def resource
-    @user
+    @user ||= current_user
   end
 
   def resource_params
