@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resource :session, only: [:create, :destroy]
 
     resource :profile, only: [:show, :create, :update] do
-      resource :avatar, only: [:update]
+      match 'avatar', to: 'avatars#update', via: :post
     end
   end
 end
