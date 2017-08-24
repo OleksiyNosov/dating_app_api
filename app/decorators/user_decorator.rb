@@ -9,12 +9,16 @@ class UserDecorator < ApplicationDecorator
     { lat: lat, lng: lng }
   end
 
+  def avatar_image
+    { original_url: avatar.url, thumb_url: avatar.url(:thumb) }
+  end
+
   private
   def _only
     %I[id email gender birthday]
   end
 
   def _methods
-    %I[full_name coords]
+    %I[full_name coords avatar_image]
   end
 end
