@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/ 
 
+  after_commit :create_auth_token, on: :create
+
   def create_auth_token
     AuthToken.create value: SecureRandom.uuid, user_id: id
   end
