@@ -1,0 +1,2 @@
+class PlaceUser < ApplicationRecord
+end
