@@ -7,7 +7,7 @@ class PlaceDecorator < ApplicationDecorator
 
   private
   def _only
-    %I[id name tags city overall_rating]
+    %I[id name place_id tags city overall_rating]
   end
 
   def _methods
