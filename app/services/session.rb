@@ -1,7 +1,8 @@
 class Session
   include ActiveModel::Validations
+  include Draper::Decoratable
 
-  attr_reader :email, :password, :user
+  attr_reader :email, :password
 
   def initialize params
     @user     = params[:user]
@@ -28,15 +29,6 @@ class Session
     user&.auth_tokens&.last
   end
 
-  def as_json *args
-    { auth_token: auth_token }
-  end
-
-  def decorate
-    self
-  end
-
-  private
   def user
     @user ||= User.find_by email: email
   end
