@@ -4,6 +4,11 @@ class ApplicationDecorator < Draper::Decorator
   end
 
   private
-  def _only() [] end
-  def _methods() [] end
+  def _only
+    [] 
+  end
+
+  def _methods 
+    [] 
+  end
 end
