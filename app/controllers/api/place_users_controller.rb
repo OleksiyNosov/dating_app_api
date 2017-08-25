@@ -1,4 +1,8 @@
 class Api::PlaceUsersController < ApplicationController
+  def show
+    resource ? resource : head(:no_content)
+  end
+
   private
   def build_resource
     @place_user = parent.place_users.build resource_params.merge(user_id: current_user.id)
