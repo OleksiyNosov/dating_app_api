@@ -3,7 +3,7 @@ class UserDecorator < ApplicationDecorator
 
   def as_json *args
     if context[:create]
-      { user: user.decorate, auth_token: user.auth_tokens.last.decorate }
+      { user: user.decorate(context: { full: true }), auth_token: user.auth_tokens.last.decorate }
     else
       super only: _only, methods: _methods
     end
@@ -11,6 +11,13 @@ class UserDecorator < ApplicationDecorator
 
   def full_name
     "#{ first_name } #{ last_name }"  
+  end
+
+  def age
+    years  = DateTime.now.year - birthday.year
+    y_days = DateTime.now.yday - birthday.yday
+    
+    y_days < 0 ? years - 1 : years
   end
 
   def coords
@@ -23,10 +30,18 @@ class UserDecorator < ApplicationDecorator
 
   private
   def _only
-    %I[id email gender birthday]
+    result = %I[id gender]
+
+    result << %I[email birthday] if context[:full]
+
+    result
   end
 
   def _methods
-    %I[full_name coords avatar_image]
+    result = %I[full_name avatar_image]
+
+    return result += %I[coords] if context[:full]
+
+    result += %I[age]
   end
 end
