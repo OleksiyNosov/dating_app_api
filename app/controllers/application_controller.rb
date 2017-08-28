@@ -5,12 +5,20 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :verify_authenticity_token, if: :json_request?
 
-  before_action :authenticate
+  before_action :authenticate, :set_decorator_context
 
   attr_reader :current_user
 
   rescue_from ActiveRecord::RecordInvalid, ActiveModel::StrictValidationFailed do
     render :errors, status: :unprocessable_entity
+  end
+
+  def index
+    collection
+  end
+
+  def show
+    resource
   end
 
   def create
@@ -38,5 +46,9 @@ class ApplicationController < ActionController::Base
 
   def json_request?
     request.format.json?
+  end
+
+  def set_decorator_context context_values = { }
+    @decorator_context = { context: context_values }
   end
 end
