@@ -3,10 +3,14 @@ class Api::ProfilesController < ApplicationController
 
   private
   def build_resource
+    set_decorator_context create: true
+
     @user = User.new resource_params
   end
 
   def resource
+    set_decorator_context full: true
+
     @user ||= current_user
   end
 
