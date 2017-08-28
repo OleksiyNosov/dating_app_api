@@ -1,16 +1,15 @@
 class Api::ProfilesController < ApplicationController
+  before_action -> { set_decorator_context create: true }, only: :create
+  before_action -> { set_decorator_context full: true }, only: :show
+
   skip_before_action :authenticate, only: :create
 
   private
   def build_resource
-    set_decorator_context create: true
-
     @user = User.new resource_params
   end
 
   def resource
-    set_decorator_context full: true
-
     @user ||= current_user
   end
 
