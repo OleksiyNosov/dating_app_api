@@ -28,8 +28,14 @@ class UserDecorator < ApplicationDecorator
     { original_url: avatar.url, thumb_url: avatar.url(:thumb) }
   end
 
+  def collection
+    object.place_users.decorate(context: { user_ratings: true })
+  end
+
   private
   def _only
+    return [] if context[:user_ratings]
+
     result = %I[id gender]
 
     result += %I[email birthday] if context[:full]
@@ -38,6 +44,8 @@ class UserDecorator < ApplicationDecorator
   end
 
   def _methods
+    return %I[collection] if context[:user_ratings]
+
     result = %I[full_name avatar_image]
 
     result += %I[coords] if context[:full]
