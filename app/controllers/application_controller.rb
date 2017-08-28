@@ -40,7 +40,13 @@ class ApplicationController < ActionController::Base
   private
   def authenticate
     authenticate_or_request_with_http_token do |token, options|
-      @current_user = User.joins(:auth_tokens).find_by(auth_tokens: { value: token })
+      auth_token = AuthToken.find_by value: token
+
+      if auth_token&.expired?
+        auth_token.destroy!
+      else
+        @current_user = User.joins(:auth_tokens).find_by(auth_tokens: { value: token })
+      end
     end
   end
 
