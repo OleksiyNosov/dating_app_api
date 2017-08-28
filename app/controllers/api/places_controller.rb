@@ -5,7 +5,7 @@ class Api::PlacesController < ApplicationController
   end
 
   def collection
-    @places ||= Place.all
+    @places = PlaceSearcher.find_by city: params[:city], tags: params[:tags]
   end
 
   def resource
