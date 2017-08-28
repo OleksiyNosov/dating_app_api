@@ -9,7 +9,7 @@ class Api::UserRatingsController < ApplicationController
   def parent
     parent_key = params.keys.detect { |k| k.match /(\w+)_id/ }
 
-    parent_class = parent_name[0..-4].capitalize.constantize
+    parent_class = parent_key[0..-4].capitalize.constantize
 
     @parent = parent_class.find params[parent_key]
   end
