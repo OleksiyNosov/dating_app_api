@@ -32,7 +32,7 @@ class UserDecorator < ApplicationDecorator
   def _only
     result = %I[id gender]
 
-    result << %I[email birthday] if context[:full]
+    result += %I[email birthday] if context[:full]
 
     result
   end
@@ -40,8 +40,10 @@ class UserDecorator < ApplicationDecorator
   def _methods
     result = %I[full_name avatar_image]
 
-    return result += %I[coords] if context[:full]
+    result += %I[coords] if context[:full]
 
-    result += %I[age]
+    result += %I[age] if context[:short]
+
+    result
   end
 end
