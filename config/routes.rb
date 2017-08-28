@@ -6,10 +6,14 @@ Rails.application.routes.draw do
       match 'avatar', to: 'avatars#update', via: :post
     end
 
-    resources :users, only: [:index, :show]
+    resources :users, only: [:index, :show] do
+      resources :user_ratings, only: [:index]
+    end
 
     resources :places, only: [:index, :show, :create, :update] do
       resource :place_user, only: [:show, :create, :update]
+
+      resources :user_ratings, only: [:index]
     end
   end
 end
