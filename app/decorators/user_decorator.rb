@@ -14,8 +14,8 @@ class UserDecorator < ApplicationDecorator
   end
 
   def age
-    years  = DateTime.now.year - birthday.year
-    y_days = DateTime.now.yday - birthday.yday
+    years  = Time.zone.now.year - birthday.year
+    y_days = Time.zone.now.yday - birthday.yday
     
     y_days < 0 ? years - 1 : years
   end

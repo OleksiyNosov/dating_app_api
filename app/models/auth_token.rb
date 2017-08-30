@@ -4,6 +4,6 @@ class AuthToken < ApplicationRecord
   validates :value, presence: true, uniqueness: true
 
   def expired?
-    created_at + 2.weeks < DateTime.now
+    created_at + 2.weeks < Time.zone.now
   end
 end
