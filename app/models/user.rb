@@ -16,13 +16,6 @@ class User < ApplicationRecord
   after_commit :create_auth_token, on: :create
 
   def create_auth_token
-    loop do
-      uuid = SecureRandom.uuid
-
-      unless AuthToken.find_by value: uuid
-        AuthToken.create value: uuid, user_id: id
-        break
-      end
-    end
+    AuthToken.create value: uuid, user_id: id
   end
 end
