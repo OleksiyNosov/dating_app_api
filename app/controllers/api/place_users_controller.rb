@@ -1,15 +1,11 @@
 class Api::PlaceUsersController < ApplicationController
-  def show
-    resource ? resource : head(:no_content)
-  end
-
   private
   def build_resource
-    @place_user = parent.place_users.build resource_params.merge(user_id: current_user.id)
+    @place_user = parent.place_users.build resource_params.merge(user: current_user)
   end
 
   def resource
-    @place_user ||= parent.place_users.find { |p| p[:user_id] == current_user.id }
+    @place_user ||= parent.place_users.find_by user: current_user 
   end
 
   def resource_params

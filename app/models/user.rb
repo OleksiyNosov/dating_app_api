@@ -1,13 +1,13 @@
 class User < ApplicationRecord
   has_secure_password
 
+  enum gender: [:male, :female]
+  
   has_many :auth_tokens, dependent: :destroy
   has_many :place_users
   has_many :places, through: :place_users
 
   has_attached_file :avatar, styles: { thumb: '300x300#' }
-
-  enum gender: [:male, :female]
 
   validates :email, presence: true, uniqueness: { case_sensetive: false }, email: true
 

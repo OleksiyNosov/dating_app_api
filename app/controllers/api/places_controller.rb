@@ -13,6 +13,6 @@ class Api::PlacesController < ApplicationController
   end
 
   def resource_params
-    params.require(:place).permit(:name, :city, :place_id, { tags: [] }, :lat, :lng)
+    params.require(:place).permit(:name, :city, :place_id, :lat, :lng, tags: [])
   end
 end
