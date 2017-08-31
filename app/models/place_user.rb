@@ -2,7 +2,7 @@ class PlaceUser < ApplicationRecord
   belongs_to :place
   belongs_to :user
 
-  validates :user_id, uniqueness: { scope: :place_id }
+  validates :user, uniqueness: { scope: :place }
   validates :rating, inclusion: { in: 1..5 }
 
   after_commit :recalculate_overall_rating, on: [:create, :update]
