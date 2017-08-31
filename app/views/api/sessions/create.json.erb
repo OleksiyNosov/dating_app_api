@@ -1,0 +1,2 @@
+<%= sanitize({ user: resource.user.decorate(context: { full: true }), 
+               auth_token: resource.user.auth_tokens.last.decorate }.to_json) %>
