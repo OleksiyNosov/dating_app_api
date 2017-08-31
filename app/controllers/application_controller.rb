@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :verify_authenticity_token, if: :json_request?
 
-  before_action :authenticate
+  before_action :authenticate, :set_decorator_context
 
   attr_reader :current_user
 
@@ -54,11 +54,7 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
-  def decorator_context 
-    @decorator_context ||= { }
-  end
-
-  def set_decorator_context context_values
+  def set_decorator_context context_values = { }
     @decorator_context = { context: context_values }
   end
 end
