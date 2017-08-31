@@ -16,8 +16,8 @@ class UserDecorator < ApplicationDecorator
     { lat: lat, lng: lng }
   end
 
-  def avatar_image
-    { original_url: avatar.url, thumb_url: avatar.url(:thumb) }
+  def avatar
+    { original_url: object.avatar.url, thumb_url: object.avatar.url(:thumb) }
   end
 
   def collection
@@ -38,7 +38,7 @@ class UserDecorator < ApplicationDecorator
   def _methods
     return %I[collection] if context[:user_ratings]
 
-    result = %I[full_name avatar_image]
+    result = %I[full_name avatar]
 
     result += %I[coords] if context[:full]
 
