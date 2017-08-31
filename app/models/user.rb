@@ -16,6 +16,6 @@ class User < ApplicationRecord
   after_commit :create_auth_token, on: :create
 
   def create_auth_token
-    AuthToken.create value: SecureRandom.uuid, user_id: id
+    AuthToken.create value: SecureRandom.uuid, user: self
   end
 end
