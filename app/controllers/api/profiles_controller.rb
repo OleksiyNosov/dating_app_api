@@ -1,5 +1,4 @@
 class Api::ProfilesController < ApplicationController
-  before_action -> { set_decorator_context create: true }, only: :create
   before_action -> { set_decorator_context full: true }, only: :show
 
   skip_before_action :authenticate, only: :create
