@@ -1,4 +1,6 @@
 class Api::UsersController < ApplicationController
+  before_action -> { set_decorator_context short: :true }, only: [:insex, :show]
+
   private
   def collection
     @users ||= User.all
@@ -6,9 +8,5 @@ class Api::UsersController < ApplicationController
 
   def resource
     @user ||= User.find params[:id]
-  end
-
-  def set_decorator_context
-    @decorator_context = { context: { short: true } }
   end
 end
