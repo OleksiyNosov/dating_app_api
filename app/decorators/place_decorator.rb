@@ -1,13 +1,15 @@
 class PlaceDecorator < ApplicationDecorator
   delegate_all
 
+  decorates_association :place_users
+
   def coords
     { lat: lat, lng: lng }
   end
 
   def ratings
-    object.place_users.map do |pl_ur|
-      { user: pl_ur.user.decorate(context: { short: true }), rating: pl_ur.rating }
+    place_users.map do |place_user|
+      { user: place_user.user.decorate(context: { short: true }), rating: place_user.rating }
     end
   end
 
@@ -19,7 +21,7 @@ class PlaceDecorator < ApplicationDecorator
   def _methods
     result = %I[coords]
 
-    result += %I[ratings] if context[:user_ratings]
+    result += %I[ratings] if context[:place_user_ratings]
 
     result
   end

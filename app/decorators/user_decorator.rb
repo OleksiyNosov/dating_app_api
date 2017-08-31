@@ -1,6 +1,9 @@
 class UserDecorator < ApplicationDecorator
   delegate_all
 
+  decorates_association :places
+  decorates_association :place_users
+
   def full_name
     "#{ first_name } #{ last_name }"  
   end
@@ -21,12 +24,12 @@ class UserDecorator < ApplicationDecorator
   end
 
   def collection
-    object.place_users.decorate(context: { user_ratings: true })
+    PlaceUserDecorator.decorate_collection place_users, context: { user_user_ratings: true }
   end
 
   private
   def _only
-    return [] if context[:user_ratings]
+    return [] if context[:user_user_ratings]
 
     result = %I[id gender]
 
@@ -36,7 +39,7 @@ class UserDecorator < ApplicationDecorator
   end
 
   def _methods
-    return %I[collection] if context[:user_ratings]
+    return %I[collection] if context[:user_user_ratings]
 
     result = %I[full_name avatar]
 
