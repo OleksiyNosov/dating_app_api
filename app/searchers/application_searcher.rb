@@ -1,5 +1,5 @@
 class ApplicationSearcher
-  def self.find_by params
+  def self.search params
     queries = params.map do |k, v|
       if v.is_a? String 
         ".where(#{ { k => v } })"
