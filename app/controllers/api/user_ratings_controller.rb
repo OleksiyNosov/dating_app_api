@@ -1,5 +1,5 @@
 class Api::UserRatingsController < ApplicationController
-  before_action -> { set_decorator_context user_ratings: true }
+  before_action -> { set_decorator_context user_ratings: true }, only: :index
 
   private
   def collection
