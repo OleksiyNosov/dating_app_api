@@ -1,14 +1,6 @@
 class UserDecorator < ApplicationDecorator
   delegate_all
 
-  def as_json *args
-    if context[:create]
-      { user: user.decorate(context: { full: true }), auth_token: user.auth_tokens.last.decorate }
-    else
-      super only: _only, methods: _methods
-    end
-  end
-
   def full_name
     "#{ first_name } #{ last_name }"  
   end
