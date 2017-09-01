@@ -18,4 +18,22 @@ RSpec.describe Api::AvatarsController, type: :controller do
 
     it { should respond_with :ok }
   end
+
+  describe '#destroy' do
+    let(:params) { { user_id: '2' } }
+
+    let(:user) { stub_model User }
+
+    before { expect(subject).to receive(:authenticate) }
+
+    before { expect(subject).to receive(:current_user).and_return(user) }
+
+    before { expect(user).to receive(:avatar=).with(nil) }
+
+    before { expect(user).to receive(:save!) }
+
+    before { process :destroy, method: :delete, params: params, format: :json }
+
+    it { should respond_with :no_content }
+  end
 end
