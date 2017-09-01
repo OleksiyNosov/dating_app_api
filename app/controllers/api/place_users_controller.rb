@@ -9,7 +9,7 @@ class Api::PlaceUsersController < ApplicationController
   end
 
   def resource_params
-    params.require(:place_user).permit(:rating)
+    params.require(:place_user).permit(:rating, :review)
   end
 
   def parent
