@@ -6,11 +6,9 @@ RSpec.describe Api::AvatarsController, type: :controller do
   describe '#create' do
     let(:params) { { avatar: 'avatar' } }
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
-
-    before { expect(subject).to receive(:resource).and_return(user) }
+    before { sign_in user }
 
     before { expect(user).to receive(:update!).with(permit! params) }
 
@@ -22,11 +20,9 @@ RSpec.describe Api::AvatarsController, type: :controller do
   describe '#destroy' do
     let(:params) { { user_id: '2' } }
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
-
-    before { expect(subject).to receive(:current_user).and_return(user) }
+    before { sign_in user }
 
     before { expect(user).to receive(:avatar=).with(nil) }
 
