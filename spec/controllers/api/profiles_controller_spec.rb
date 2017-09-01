@@ -4,11 +4,9 @@ RSpec.describe Api::ProfilesController, type: :controller do
   it { should be_an ApplicationController }
 
   describe '#show' do
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
-    
-    before { expect(subject).to receive(:current_user).and_return(user) }
+    before { sign_in user }
 
     its(:resource) { should eq user }
     
@@ -22,7 +20,7 @@ RSpec.describe Api::ProfilesController, type: :controller do
 
     let(:params) { { user: user_params } }
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
     before { expect(User).to receive(:new).with(permit! user_params).and_return(user) }
 
@@ -38,11 +36,9 @@ RSpec.describe Api::ProfilesController, type: :controller do
 
     let(:params) { { user: user_params } }
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
-
-    before { expect(subject).to receive(:resource).and_return(user) }
+    before { sign_in user }
 
     before { expect(user).to receive(:update!).with(permit! user_params) }
 
