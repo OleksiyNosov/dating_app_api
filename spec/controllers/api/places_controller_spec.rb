@@ -6,7 +6,7 @@ RSpec.describe Api::PlacesController, type: :controller do
   describe '#index' do
     let(:params) { { city: 'London', tags: ['beer', 'pizza'] } }
 
-    before { expect(subject).to receive(:authenticate) }
+    before { sign_in }
 
     before { expect(PlaceSearcher).to receive(:search).with(params).and_return(:collection) }
 
@@ -20,7 +20,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     let(:place) { stub_model Place }
 
-    before { expect(subject).to receive(:authenticate) }
+    before { sign_in }
 
     before { expect(Place).to receive(:find).with('1').and_return(place) }
 
@@ -38,7 +38,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     let(:place) { stub_model Place }
 
-    before { expect(subject).to receive(:authenticate) }
+    before { sign_in }
 
     before { expect(Place).to receive(:new).with(permit! place_params).and_return(place) }
 
@@ -56,7 +56,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     let(:place) { stub_model Place }
 
-    before { expect(subject).to receive(:authenticate) }
+    before { sign_in }
 
     before { expect(Place).to receive(:find).with('1').and_return(place) }
 
