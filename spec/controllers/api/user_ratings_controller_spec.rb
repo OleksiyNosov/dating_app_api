@@ -9,7 +9,7 @@ RSpec.describe Api::UserRatingsController, type: :controller do
 
       let(:parent) { stub_model Place }
 
-      before { expect(subject).to receive(:authenticate) }
+      before { sign_in }
 
       before { expect(Place).to receive(:find).with('3').and_return(parent) }
 
@@ -23,7 +23,7 @@ RSpec.describe Api::UserRatingsController, type: :controller do
 
       let(:parent) { stub_model User }
 
-      before { expect(subject).to receive(:authenticate) }
+      before { sign_in }
 
       before { expect(User).to receive(:find).with('2').and_return(parent) }
 

@@ -22,7 +22,7 @@ RSpec.describe Api::SessionsController, type: :controller do
   describe '#destroy' do
     let(:session) { Session.new }
 
-    before { expect(subject).to receive(:authenticate) }
+    before { sign_in }
 
     before { expect(subject).to receive(:resource).and_return(session) }
 

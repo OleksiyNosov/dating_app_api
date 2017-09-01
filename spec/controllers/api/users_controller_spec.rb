@@ -4,7 +4,7 @@ RSpec.describe Api::UsersController, type: :controller do
   it { should be_an ApplicationController }
 
   describe '#index' do
-    before { expect(subject).to receive(:authenticate) }
+    before { sign_in }
 
     before { expect(User).to receive(:all).and_return(:collection) }
 
@@ -18,9 +18,9 @@ RSpec.describe Api::UsersController, type: :controller do
   describe '#show' do
     let(:params) { { id: '1' } }
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
+    before { sign_in user }
 
     before { expect(User).to receive(:find).with('1').and_return(user) }
 
