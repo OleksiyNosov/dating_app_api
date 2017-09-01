@@ -13,8 +13,7 @@ RSpec.describe User, type: :model do
 
   it { should validate_presence_of :email }
 
-  puts "\nUser (:email).case_insensitive problem"
-  # it { should validate_uniqueness_of(:email).case_insensitive }
+  it { should validate_uniqueness_of(:email).case_insensitive }
 
   it { should_not allow_value('test').for(:email) }
 
@@ -28,14 +27,19 @@ RSpec.describe User, type: :model do
               allowing('image/png', 'image/gif').
               rejecting('text/plain', 'text/xml') }
 
-  puts "User#create_auth_token problem"
   describe 'create_auth_token' do
-    let(:value) { { value: 'XXXX-YYYY-ZZZZ' } }
+    let(:value) { 'XXXX-YYYY-ZZZZ' }
 
-    let(:auth_token) { stub_model AuthToken, value }
+    let(:user) { double }
 
-    before { expect(AuthToken).to receive(:create).with(value, subject).and_return(auth_token) }
+    let(:params) { { value: value, user: user } }
 
-    # its(:auth_tokens) {  }
+    let(:auth_token) { stub_model AuthToken }
+
+    # before { expect(AuthToken).to receive(:create).with(params).and_return(auth_token) }
+
+    its(:auth_tokens) {  }
+
+    xit { }
   end
 end

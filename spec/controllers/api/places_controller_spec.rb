@@ -3,15 +3,12 @@ require 'rails_helper'
 RSpec.describe Api::PlacesController, type: :controller do
   it { should be_an ApplicationController }
 
-  puts "\nPlacesController#index problem"
   describe '#index' do
     let(:params) { { city: 'London', tags: ['beer', 'pizza'] } }
 
     before { expect(subject).to receive(:authenticate) }
 
     before { expect(PlaceSearcher).to receive(:search).with(params).and_return(:collection) }
-
-    # its(:collection) { should eq :collection }
 
     before { process :index, method: :get, params: params, format: :json }
 
