@@ -1,9 +1,11 @@
 class Api::AvatarsController < ApplicationController
-  private
-  def build_resource
-    resource.update resource_params
+  def create
+    resource.update! resource_params
+
+    head :ok
   end
   
+  private
   def resource
     @user ||= current_user
   end
