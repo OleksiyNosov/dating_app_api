@@ -3,11 +3,8 @@ require 'rails_helper'
 RSpec.describe Api::AvatarsController, type: :controller do
   it { should be_an ApplicationController }
 
-  puts "\nAvatarsController#create problem"
   describe '#create' do
-    let(:avatar) { fixture_file_upload('files/image.jpg', 'image/jpg') }
-
-    let(:params) { { avatar: avatar } }
+    let(:params) { { avatar: 'avatar' } }
 
     let(:user) { stub_model User }
 
@@ -15,10 +12,10 @@ RSpec.describe Api::AvatarsController, type: :controller do
 
     before { expect(subject).to receive(:resource).and_return(user) }
 
-    before { expect(user).to receive(:update!).with(params) }
+    before { expect(user).to receive(:update!).with(permit! params) }
 
     before { process :create, method: :post, params: params }
 
-    # it { should render_template :create }
+    it { should respond_with :ok }
   end
 end
