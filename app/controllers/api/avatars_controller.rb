@@ -4,6 +4,14 @@ class Api::AvatarsController < ApplicationController
 
     head :ok
   end
+
+  def destroy
+    resource.avatar = nil
+
+    resource.save!
+
+    head :no_content
+  end
   
   private
   def resource
