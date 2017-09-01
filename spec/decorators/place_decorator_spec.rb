@@ -30,7 +30,6 @@ RSpec.describe PlaceDecorator do
     end
 
     context 'place_user_ratings' do
-
       subject { place.decorate(context: { place_user_ratings: true }) }
 
       its('as_json.symbolize_keys') do
