@@ -9,7 +9,7 @@ class User < ApplicationRecord
 
   has_attached_file :avatar, styles: { thumb: '300x300#' }
 
-  validates :email, presence: true, uniqueness: { case_sensetive: false }, email: true
+  validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
 
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/ 
 
