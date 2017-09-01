@@ -18,6 +18,7 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
 
   config.include Permitter
+  config.include Authentication
 end
 
 Shoulda::Matchers.configure do |config|
