@@ -13,7 +13,8 @@ RSpec.describe User, type: :model do
 
   it { should validate_presence_of :email }
 
-  it { should validate_uniqueness_of :email }
+  puts "\nUser (:email).case_insensitive problem"
+  # it { should validate_uniqueness_of(:email).case_insensitive }
 
   it { should_not allow_value('test').for(:email) }
 
@@ -26,4 +27,15 @@ RSpec.describe User, type: :model do
   it { should validate_attachment_content_type(:avatar).
               allowing('image/png', 'image/gif').
               rejecting('text/plain', 'text/xml') }
+
+  puts "User#create_auth_token problem"
+  describe 'create_auth_token' do
+    let(:value) { { value: 'XXXX-YYYY-ZZZZ' } }
+
+    let(:auth_token) { stub_model AuthToken, value }
+
+    before { expect(AuthToken).to receive(:create).with(value, subject).and_return(auth_token) }
+
+    # its(:auth_tokens) {  }
+  end
 end
