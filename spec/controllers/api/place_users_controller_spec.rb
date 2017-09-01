@@ -10,11 +10,9 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     let(:parent) { stub_model Place }
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
-
-    before { expect(subject).to receive(:current_user).and_return(user) }
+    before { sign_in user }
 
     before { expect(Place).to receive(:find).with('3').and_return(parent) }
 
@@ -41,11 +39,9 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     let(:parent) { stub_model Place }
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
-
-    before { expect(subject).to receive(:current_user).and_return(user) }
+    before { sign_in user }
 
     before { expect(Place).to receive(:find).with('3').and_return(parent) }
 
@@ -76,11 +72,9 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     let(:parent) { stub_model Place } 
 
-    let(:user) { stub_model User }
+    let(:user) { double }
 
-    before { expect(subject).to receive(:authenticate) }
-
-    before { expect(subject).to receive(:current_user).and_return(user) }
+    before { sign_in user }
 
     before { expect(Place).to receive(:find).with('3').and_return(parent) }
 
