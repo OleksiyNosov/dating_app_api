@@ -13,6 +13,7 @@ gem 'bcrypt'
 gem 'draper'
 gem 'email_validator'
 gem 'paperclip'
+gem 'activerecord-postgres-earthdistance'
 
 group :development, :test do
   gem 'rspec-rails'
