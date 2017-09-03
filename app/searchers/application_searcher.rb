@@ -1,16 +1,28 @@
 class ApplicationSearcher
-  def self.search params
-    queries = params.map do |k, v|
-      if v.is_a? String 
-        ".where(#{ { k => v } })"
-      elsif v.is_a? Array
-        arg1 = "'#{ k } @> ARRAY[?]::varchar[]'"
-        ".where(#{ arg1 }, #{ v })"
-      else
-        ""
-      end
+  def initialize_params params={}
+    @params = params&.symbolize_keys || { }
+  end
+
+  def search
+    initialize_results
+
+    @params.each do |attribute, value|
+      method_name = :"search_by_#{ attribute }"
+
+      send method_name, value if respond_to?(method_name, true)
     end
 
-    eval "#{ self.to_s[0..-9] }#{ queries.join }"
+    @results
+  end
+
+  private
+  def initialize_results
+    @results = []
+  end
+
+  class << self
+    def search params={}
+      new(params).search
+    end
   end
 end
