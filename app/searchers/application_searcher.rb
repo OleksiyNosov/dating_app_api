@@ -1,6 +1,6 @@
 class ApplicationSearcher
-  def initialize_params params={}
-    @params = params&.symbolize_keys || { }
+  def initialize params={}
+    @params = params
   end
 
   def search
