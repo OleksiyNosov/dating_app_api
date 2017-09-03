@@ -5,7 +5,7 @@ class Api::PlacesController < ApplicationController
   end
 
   def collection
-    @places = PlaceSearcher.search city: params[:city], tags: params[:tags]
+    @places = PlaceSearcher.search params.merge(user: { lat: current_user.lat, lng: current_user.lng })
   end
 
   def resource
