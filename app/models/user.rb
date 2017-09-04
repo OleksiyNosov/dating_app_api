@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include EarthDistance
+
   has_secure_password
 
   enum gender: [:male, :female]
@@ -17,5 +19,9 @@ class User < ApplicationRecord
 
   def create_auth_token
     AuthToken.create value: SecureRandom.uuid, user: self
+  end
+
+  def distance_to place
+    earth_distance_between self.lat, self.lng, place.lat, place.lng
   end
 end
