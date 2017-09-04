@@ -1,4 +1,6 @@
 class PlaceDecorator < ApplicationDecorator
+  include SimpleMathOperations
+
   delegate_all
 
   decorates_association :place_users
@@ -11,6 +13,10 @@ class PlaceDecorator < ApplicationDecorator
     place_users.map do |place_user|
       { user: place_user.user.decorate(context: { short: true }), rating: place_user.rating }
     end
+  end
+
+  def distance
+    m_to_km(object.distance).round 2 
   end
 
   private

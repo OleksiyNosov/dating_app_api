@@ -1,4 +1,6 @@
 class PlaceSearcher < ApplicationSearcher
+  include SimpleMathOperations
+
   private
   def initialize_results
     @results = Place.all
@@ -19,7 +21,7 @@ class PlaceSearcher < ApplicationSearcher
   def search_by_range range
     return unless range
 
-    @results = @results.where build_query_by_range(@params[:user], km_to_m(range), 'places')
+    @results = @results.where build_query_by_range(@params[:user], km_to_m(range.to_i), 'places')
   end
 
   def build_query_by_range center, range, table
@@ -28,9 +30,5 @@ class PlaceSearcher < ApplicationSearcher
     location = "ll_to_earth(#{ table }.lat, #{ table }.lng)"
 
     "#{ earth_box } @> #{ location }"
-  end
-
-  def km_to_m km
-    km.to_i * 1000
   end
 end
