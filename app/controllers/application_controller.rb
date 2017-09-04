@@ -54,7 +54,7 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
-  def set_decorator_context context_values = { }
+  def set_decorator_context context_values={}
     @decorator_context = { context: context_values }
   end
 end
