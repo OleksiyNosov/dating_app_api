@@ -1,5 +1,5 @@
 class Api::PlacesController < ApplicationController
-  before_action -> { set_decorator_context with_distance: true }, only: [:index]
+  before_action -> { set_decorator_context with_distance: true }, only: :index
 
   private
   def build_resource
