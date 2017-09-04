@@ -21,7 +21,11 @@ class PlaceDecorator < ApplicationDecorator
   def _methods
     result = %I[coords]
 
+    puts context.to_s
+
     result += %I[ratings] if context[:place_user_ratings]
+
+    result += %I[distance] if context[:with_distance]
 
     result
   end
