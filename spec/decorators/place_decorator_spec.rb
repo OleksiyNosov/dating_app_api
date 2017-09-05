@@ -10,7 +10,8 @@ RSpec.describe PlaceDecorator do
     tags: ['beer', 'pizza'], 
     overall_rating: 4.6,
     lat: 136.5,
-    lng: 30.9
+    lng: 30.9,
+    distance: 3.6
   end
 
   describe '#as_json' do
@@ -42,6 +43,26 @@ RSpec.describe PlaceDecorator do
         overall_rating: 4.6,
         coords: { lat: 136.5, lng: 30.9 },
         ratings: []
+      end
+    end
+
+    context 'with_distance' do
+      subject { place.decorate(context: { with_distance: true }) }
+
+      let(:distance) { 3.6 }
+
+      before { expect(subject).to receive(:distance).and_return(distance) }
+
+      its('as_json.symbolize_keys') do
+        should eq \
+        id: 3, 
+        name: 'Mafia', 
+        city: 'Vinnitsia',
+        place_id: '', 
+        tags: ['beer', 'pizza'], 
+        overall_rating: 4.6,
+        coords: { lat: 136.5, lng: 30.9 },
+        distance: distance
       end
     end
   end
