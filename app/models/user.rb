@@ -18,7 +18,7 @@ class User < ApplicationRecord
   after_commit :create_auth_token, on: :create
 
   def create_auth_token
-    AuthToken.create value: SecureRandom.uuid, user: self
+    AuthToken.create value: SecureRandom.uuid, user: self, expired_at: Time.zone.now + 2.weeks
   end
 
   def distance_to place
