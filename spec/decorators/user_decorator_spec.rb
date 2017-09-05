@@ -1,6 +1,58 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
+  describe '#full_name' do
+    let(:first_name) { 'John' }
+
+    let(:last_name) { 'Smith' }
+
+    before do 
+      expect(subject).to receive(:object) do
+        double.tap { |a| expect(a).to receive(:first_name).and_return(first_name) }
+      end 
+    end
+
+    before { expect(subject).to receive(:last_name).and_return(last_name) }
+
+    let(:result) { "#{ first_name } #{ last_name }" }
+
+    xit(:full_name) { should eq result }
+  end
+
+  describe '#age' do
+
+  end
+
+  describe '#coords' do
+    let(:lat) { 28.3 }
+
+    let(:lng) { 48.5 }
+
+    let(:result) { { lat: lat, lng: lng } }
+
+    xit(:coords) { should eq result }
+  end
+
+  describe '#avatar' do
+    xit { }
+  end
+
+  describe '#collection' do
+    let(:context) { { context: { user_user_ratings: true } } }
+
+    let(:place_users) { double }
+
+    let(:collection) { double }
+
+    before { expect(subject).to receive(:place_users).and_return(place_users) }
+
+    before do 
+      expect(PlaceUserDecorator).to receive(:decorate_collection).with(place_users, context).and_return(collection) 
+    end
+
+    xit(:collection) { should eq collection }
+  end
+
   describe '#as_json' do
     let(:user) do 
       stub_model User,
