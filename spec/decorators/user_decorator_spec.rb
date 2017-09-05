@@ -1,12 +1,99 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
-  let(:user) do 
-    stub_model User,
-    id: 2,
-    email: 'test@test.com',
-    first_name: 'John',
-    last_name: 'Smith',
-    birth_day: Time.zone.new(1992, 1, 1)
+  describe '#as_json' do
+    let(:user) do 
+      stub_model User,
+      id: 2,
+      email: 'test@test.com',
+      first_name: 'John',
+      last_name: 'Smith',
+      gender: 'male',
+      birthday: Time.new(1992, 1, 1)
+    end
+
+    context do
+      subject { user.decorate }
+
+      let(:full_name) { 'John Smith' }
+      
+      let(:avatar) { :avatar }
+
+      before { expect(subject).to receive(:full_name).and_return(full_name) }
+
+      before { expect(subject).to receive(:avatar).and_return(avatar) }
+
+      its('as_json.symbolize_keys') do
+        should eq \
+        id: 2,
+        gender: 'male',
+        full_name: full_name,
+        avatar: avatar
+      end
+    end
+
+    context 'full' do
+      subject { user.decorate(context: { full: true }) }
+
+      let(:full_name) { 'John Smith' }
+
+      let(:avatar) { :avatar }
+
+      let(:coords) { double }
+
+      before { expect(subject).to receive(:full_name).and_return(full_name) }
+
+      before { expect(subject).to receive(:avatar).and_return(avatar) }
+
+      before { expect(subject).to receive(:coords).and_return(coords) }
+
+      its('as_json.symbolize_keys') do
+        should eq \
+        id: 2,
+        gender: 'male',
+        email: 'test@test.com',
+        birthday: Time.new(1992, 1, 1),
+        full_name: full_name,
+        avatar: avatar,
+        coords: coords
+      end
+    end
+
+    context 'short' do
+      subject { user.decorate(context: { short: true }) }
+
+      let(:full_name) { 'John Smith' }
+
+      let(:avatar) { :avatar }
+
+      let(:age) { 18 }
+
+      before { expect(subject).to receive(:full_name).and_return(full_name) }
+
+      before { expect(subject).to receive(:avatar).and_return(avatar) }
+
+      before { expect(subject).to receive(:age).and_return(age) }
+
+      its('as_json.symbolize_keys') do
+        should eq \
+        id: 2,
+        gender: 'male',
+        full_name: full_name,
+        avatar: avatar,
+        age: age
+      end
+    end
+
+    context 'user_user_ratings' do
+      subject { user.decorate(context: { user_user_ratings: true }) }
+
+      let(:collection) { [] }
+
+      let(:result) { { collection: collection } }
+
+      before { expect(subject).to receive(:collection).and_return(collection) }
+
+      its('as_json.symbolize_keys') { should eq result }
+    end
   end
 end
