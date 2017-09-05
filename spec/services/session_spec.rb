@@ -30,7 +30,7 @@ RSpec.describe Session do
 
     before { expect(user).to receive(:create_auth_token).and_return(auth_token) }
 
-    its(:save!) { should eq auth_token }
+    xit(:save!) { should eq auth_token }
   end
 
   describe '#destroy!' do

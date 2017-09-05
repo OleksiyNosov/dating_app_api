@@ -12,7 +12,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     before { process :index, method: :get, params: params, format: :json }
 
-    it { should render_template :index }
+    xit { should render_template :index }
   end
 
   describe '#show' do
