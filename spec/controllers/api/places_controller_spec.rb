@@ -58,4 +58,26 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     it { should render_template :update }
   end
+
+  describe '#collection' do
+    # TODO: after refactor of PlacesSearcher
+
+    xit { }
+  end
+
+  describe '#resource' do
+    let(:params) { '1' }
+
+    let(:place) { stub_model Place }
+
+    before do 
+      expect(subject).to receive(:params) do
+        double.tap { |a| expect(a).to receive(:[]).with(:id).and_return(params) }
+      end 
+    end
+
+    before { expect(Place).to receive(:find).with('1').and_return(place) }
+
+    its(:resource) { should eq place }
+  end
 end
