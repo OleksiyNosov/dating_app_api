@@ -84,7 +84,10 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     before { expect(subject).to receive(:current_user).and_return(user) }
 
-    before do 
+    before do
+      #
+      # parent.place_users.find_by -> place_user
+      # 
       expect(subject).to receive(:parent) do
         double.tap do |a| 
           expect(a).to receive(:place_users) do 
@@ -102,13 +105,16 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     let(:params) { '3' }
 
-    before do 
+    before do
+      #
+      # params[:place_id] -> 3
+      #
       expect(subject).to receive(:params) do
         double.tap { |a| expect(a).to receive(:[]).with(:place_id).and_return(params) }
       end 
     end
 
-    before { expect(Place).to receive(:find).with('3').and_return(parent) }
+    before { expect(Place).to receive(:find).with(params).and_return(parent) }
 
     its(:parent) { should eq parent }
   end

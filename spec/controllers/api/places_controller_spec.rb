@@ -71,12 +71,15 @@ RSpec.describe Api::PlacesController, type: :controller do
     let(:place) { stub_model Place }
 
     before do 
+      #
+      # params[:id] -> 1
+      #
       expect(subject).to receive(:params) do
         double.tap { |a| expect(a).to receive(:[]).with(:id).and_return(params) }
       end 
     end
 
-    before { expect(Place).to receive(:find).with('1').and_return(place) }
+    before { expect(Place).to receive(:find).with(params).and_return(place) }
 
     its(:resource) { should eq place }
   end
