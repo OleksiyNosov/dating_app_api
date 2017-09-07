@@ -4,27 +4,19 @@ RSpec.describe Api::PlacesController, type: :controller do
   it { should be_an ApplicationController }
 
   describe '#index' do
-    let(:params) { { city: 'London', tags: ['beer', 'pizza'] } }
+    let(:params) { { city: 'London', tags: ['beer', 'pizza'], range: '6' } }
 
     before { sign_in }
 
-    before { expect(PlaceSearcher).to receive(:search).with(params).and_return(:collection) }
-
     before { process :index, method: :get, params: params, format: :json }
 
-    xit { should render_template :index }
+    it { should render_template :index }
   end
 
   describe '#show' do
     let(:params) { { id: '1' } }
 
-    let(:place) { stub_model Place }
-
     before { sign_in }
-
-    before { expect(Place).to receive(:find).with('1').and_return(place) }
-
-    its(:resource) { should eq place }
 
     before { process :show, method: :get, params: params, format: :json }
 
