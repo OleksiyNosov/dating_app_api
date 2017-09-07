@@ -71,6 +71,9 @@ RSpec.describe Api::PlacesController, type: :controller do
     let(:place) { stub_model Place }
 
     before do 
+      #
+      # params[:id] -> 1
+      #
       expect(subject).to receive(:params) do
         double.tap { |a| expect(a).to receive(:[]).with(:id).and_return(params) }
       end 
