@@ -82,7 +82,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     let(:user) { stub_model User }
 
-    before { sign_in user }
+    before { expect(subject).to receive(:current_user).and_return(user) }
 
     before do 
       expect(subject).to receive(:parent) do
@@ -104,7 +104,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     before do 
       expect(subject).to receive(:params) do
-        double.tap { |a| expect(a).to receive('[]').with(:place_id).and_return(params) }
+        double.tap { |a| expect(a).to receive(:[]).with(:place_id).and_return(params) }
       end 
     end
 
