@@ -16,7 +16,7 @@ class PlaceDecorator < ApplicationDecorator
   end
 
   def distance
-    m_to_km(object.distance).round 2 
+    miles_to_km(object.distance).round(2)
   end
 
   private
