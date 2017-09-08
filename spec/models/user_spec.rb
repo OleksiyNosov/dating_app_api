@@ -30,16 +30,31 @@ RSpec.describe User, type: :model do
   describe 'create_auth_token' do
     let(:value) { 'XXXX-YYYY-ZZZZ' }
 
-    let(:user) { double }
+    let(:created_at_time) { Time.new(2010, 7, 16) }
 
-    let(:params) { { value: value, user: user } }
+    let(:valid_token_time) { 2.weeks }
+
+    let(:expired_at_time) { created_at_time + valid_token_time }
+
+    let(:params) { { value: value, user: subject, expired_at: expired_at_time } }
 
     let(:auth_token) { stub_model AuthToken }
 
-    # before { expect(AuthToken).to receive(:create).with(params).and_return(auth_token) }
+    before { expect(SecureRandom).to receive(:uuid).and_return(value) }
 
-    its(:auth_tokens) {  }
+    before do 
+      #
+      # Time.zone.now -> created_at_time
+      #
+      expect(Time).to receive(:zone) do
+        double.tap { |a| expect(a).to receive(:now).and_return(created_at_time) }
+      end 
+    end
 
-    xit { }
+    before { expect(created_at_time).to receive(:+).with(valid_token_time).and_return(expired_at_time) }
+
+    before { expect(AuthToken).to receive(:create).with(params).and_return(auth_token) }
+
+    its(:create_auth_token) { should eq auth_token }
   end
 end
