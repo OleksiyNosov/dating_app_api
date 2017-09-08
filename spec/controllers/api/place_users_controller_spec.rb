@@ -6,24 +6,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
   describe '#show' do
     let(:params) { { place_user: { }, id: '2', place_id: '3' } }
 
-    let(:place_user) { stub_model PlaceUser }
-
-    let(:parent) { stub_model Place }
-
-    let(:user) { double }
-
-    before { sign_in user }
-
-    before { expect(Place).to receive(:find).with('3').and_return(parent) }
-
-    before do
-      #
-      # parent.place_users.find_by -> place_user
-      #
-      expect(parent).to receive(:place_users) do
-        double.tap { |a| expect(a).to receive(:find_by).with(user: user).and_return(place_user) }
-      end
-    end
+    before { sign_in }
 
     before { process :show, method: :get, params: params, format: :json }
 
@@ -92,5 +75,47 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
     before { process :update, method: :patch, params: params, format: :json }
 
     it { should render_template :update }
+  end
+
+  describe '#resource' do
+    let(:place_user) { stub_model PlaceUser }
+
+    let(:user) { stub_model User }
+
+    before { expect(subject).to receive(:current_user).and_return(user) }
+
+    before do
+      #
+      # parent.place_users.find_by -> place_user
+      # 
+      expect(subject).to receive(:parent) do
+        double.tap do |a| 
+          expect(a).to receive(:place_users) do 
+            double.tap { |b| expect(b).to receive(:find_by).with(user: user).and_return(place_user) }
+          end         
+        end
+      end
+    end
+
+    its(:resource) { should eq place_user }
+  end
+
+  describe '#parent' do
+    let(:parent) { stub_model Place }
+
+    let(:params) { '3' }
+
+    before do
+      #
+      # params[:place_id] -> 3
+      #
+      expect(subject).to receive(:params) do
+        double.tap { |a| expect(a).to receive(:[]).with(:place_id).and_return(params) }
+      end 
+    end
+
+    before { expect(Place).to receive(:find).with(params).and_return(parent) }
+
+    its(:parent) { should eq parent }
   end
 end

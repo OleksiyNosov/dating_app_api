@@ -13,14 +13,6 @@ class ApplicationController < ActionController::Base
     render :errors, status: :unprocessable_entity
   end
 
-  def index
-    collection
-  end
-
-  def show
-    resource
-  end
-
   def create
     build_resource
 

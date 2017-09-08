@@ -4,27 +4,19 @@ RSpec.describe Api::PlacesController, type: :controller do
   it { should be_an ApplicationController }
 
   describe '#index' do
-    let(:params) { { city: 'London', tags: ['beer', 'pizza'] } }
+    let(:params) { { city: 'London', tags: ['beer', 'pizza'], range: '6' } }
 
     before { sign_in }
 
-    before { expect(PlaceSearcher).to receive(:search).with(params).and_return(:collection) }
-
     before { process :index, method: :get, params: params, format: :json }
 
-    xit { should render_template :index }
+    it { should render_template :index }
   end
 
   describe '#show' do
     let(:params) { { id: '1' } }
 
-    let(:place) { stub_model Place }
-
     before { sign_in }
-
-    before { expect(Place).to receive(:find).with('1').and_return(place) }
-
-    its(:resource) { should eq place }
 
     before { process :show, method: :get, params: params, format: :json }
 
@@ -65,5 +57,30 @@ RSpec.describe Api::PlacesController, type: :controller do
     before { process :update, method: :patch, params: params, format: :json }
 
     it { should render_template :update }
+  end
+
+  describe '#collection' do
+    # TODO: after refactor of PlacesSearcher
+
+    xit { }
+  end
+
+  describe '#resource' do
+    let(:params) { '1' }
+
+    let(:place) { stub_model Place }
+
+    before do 
+      #
+      # params[:id] -> 1
+      #
+      expect(subject).to receive(:params) do
+        double.tap { |a| expect(a).to receive(:[]).with(:id).and_return(params) }
+      end 
+    end
+
+    before { expect(Place).to receive(:find).with(params).and_return(place) }
+
+    its(:resource) { should eq place }
   end
 end
