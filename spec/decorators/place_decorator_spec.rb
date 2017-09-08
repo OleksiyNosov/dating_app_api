@@ -10,8 +10,7 @@ RSpec.describe PlaceDecorator do
     tags: ['beer', 'pizza'], 
     overall_rating: 4.6,
     lat: 136.5,
-    lng: 30.9,
-    distance: 3.6
+    lng: 30.9
   end
 
   describe '#as_json' do
