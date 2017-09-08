@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  include EarthDistance
-
   has_secure_password
 
   enum gender: [:male, :female]

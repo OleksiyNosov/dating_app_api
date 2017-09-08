@@ -8,9 +8,6 @@ class Api::PlacesController < ApplicationController
 
   def collection
     @places = PlaceSearcher.search params.merge(user: { lat: current_user.lat, lng: current_user.lng })
-
-    @places.each { |place| place.distance = current_user.distance_to place }
-           .sort { |a, b| a.distance <=> b.distance }
   end
 
   def resource
