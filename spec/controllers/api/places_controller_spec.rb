@@ -60,9 +60,23 @@ RSpec.describe Api::PlacesController, type: :controller do
   end
 
   describe '#collection' do
-    # TODO: after refactor of PlacesSearcher
+    let(:params) { { range: '6' } }
 
-    xit { }
+    let(:user) { { user: { lat: 1.5, lng: 0.5 } } }
+
+    let(:merged_params) { { params: params.merge(user) } }
+
+    let(:place_searcher) { PlaceSearcher.new }
+
+    before { expect(subject).to receive(:current_user).and_return(user) }
+
+    before { expect(subject).to receive(:params).and_return(params) }
+
+    before { expect(params).to receive(:merge).with(user).and_return(merged_params) }
+
+    before { expect(place_searcher).to receive(:search).with(merged_params).and_return(:collection) }
+
+    xit(:collection) { should eq :collection }
   end
 
   describe '#resource' do
