@@ -15,5 +15,7 @@ Rails.application.routes.draw do
 
       resources :user_ratings, only: [:index]
     end
+
+    resources :events, except: [:new, :edit]
   end
 end
