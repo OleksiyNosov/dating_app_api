@@ -1,5 +1,0 @@
-<% if @parent.is_a? User %>
-  <%= sanitize collection.decorate(context: { with_event: true }).to_json %>
-<% else %>
-  <%= sanitize collection.decorate(context: { with_user: true }).to_json %>
-<% end %>
