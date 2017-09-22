@@ -17,15 +17,15 @@ class EventDecorator < ApplicationDecorator
   end
 
   def people_attended_count
-    -1
+    object.invites.where(respond: :attend).count
   end
 
   def people_attended
-    ["not implemented yet"]
+    object.invites.where(respond: :attend).map { |invite| invite.user.decorate(context: { short: true }) }
   end
 
   def invites
-    ["not implemented yet"]
+    object.invites.decorate(context: { with_user: true })
   end
 
   private
