@@ -2,7 +2,7 @@ class InviteDecorator < ApplicationDecorator
   delegate_all
 
   decorates_association :user, context: { short: true }
-  decorates_association :event
+  decorates_association :event, context: { short: true }
 
   private
   def _only
