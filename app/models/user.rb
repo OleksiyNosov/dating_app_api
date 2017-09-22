@@ -6,6 +6,8 @@ class User < ApplicationRecord
   has_many :auth_tokens, dependent: :destroy
   has_many :place_users
   has_many :places, through: :place_users
+  has_many :events
+  has_many :invites
 
   has_attached_file :avatar, styles: { thumb: '300x300#' }
 

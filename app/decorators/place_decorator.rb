@@ -21,7 +21,11 @@ class PlaceDecorator < ApplicationDecorator
 
   private
   def _only
-    %I[id name place_id tags city overall_rating]
+    result = %I[id name place_id city overall_rating]
+
+    return result if context[:short]
+
+    result += %I[tags] 
   end
 
   def _methods
