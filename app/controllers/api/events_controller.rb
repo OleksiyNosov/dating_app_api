@@ -1,5 +1,7 @@
 class Api::EventsController < ApplicationController
   before_action :validate_author, only: [:update, :delete]
+  before_action -> { set_decorator_context(full: true) }, only: [:show, :create, :update]
+  before_action -> { set_decorator_context(short: true) }, only: [:index]
 
   private
   def collection
