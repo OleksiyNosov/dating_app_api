@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :create, :update] do
       resource :avatar, only: [:create, :destroy]
 
-      resources :invites, only: [:index]
+      resources :invites, only: [:index, :show, :update]
     end
 
     resources :users, only: [:index, :show] do
@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       resource :place_user, only: [:show, :create, :update]
 
       resources :user_ratings, only: [:index]
+
+      resources :events, only: [:index]
     end
 
     resources :events, except: [:new, :edit] do
