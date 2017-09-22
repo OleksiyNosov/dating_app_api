@@ -5,7 +5,7 @@ class Api::InvitesController < ApplicationController
 
   private
   def build_resource
-    @invite = Invite.create resource_params.merge event: parent, respond: :no_respond 
+    @invite = Invite.create! resource_params.merge event: parent, respond: :no_respond
   end
 
   def collection
@@ -13,7 +13,7 @@ class Api::InvitesController < ApplicationController
   end
 
   def resource
-    @invite = Invite.find params[:id]
+    @invite ||= Invite.find params[:id]
   end
 
   def profile_is_parent?
