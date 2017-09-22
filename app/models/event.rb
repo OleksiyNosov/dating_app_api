@@ -4,5 +4,7 @@ class Event < ApplicationRecord
   belongs_to :place
   belongs_to :user
 
+  has_many :invites
+
   validates :place, :user, :title, presence: true
 end
