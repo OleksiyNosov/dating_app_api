@@ -1,7 +1,7 @@
 class EventDecorator < ApplicationDecorator
   delegate_all
 
-  decorates_association :place
+  decorates_association :place, context: { short: true }
   decorates_association :user, context: { short: true }
 
   def date
@@ -30,10 +30,14 @@ class EventDecorator < ApplicationDecorator
 
   private
   def _only
-    %I[id kind title description]
+    return %I[id kind title description] if context[:full]
+
+    return %I[id kind title description] if context[:short]
   end
 
   def _methods
-    %I[place date time author people_attended_count people_attended invites]
+    return %I[place date time author people_attended_count people_attended invites] if context[:full]
+
+    return %I[place date time] if context[:short]
   end
 end
