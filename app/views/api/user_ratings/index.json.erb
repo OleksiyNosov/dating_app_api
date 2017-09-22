@@ -1,5 +1,5 @@
 <% if @parent.is_a? User %>
-  <%= sanitize collection.decorate(context: { user_user_ratings: :true }).to_json %>
+  <%= sanitize collection.decorate(context: { user_user_ratings: true }).to_json %>
 <% else %>
-  <%= sanitize collection.decorate(context: { place_user_ratings: :true }).to_json %>
+  <%= sanitize collection.decorate(context: { place_user_ratings: true }).to_json %>
 <% end %>
