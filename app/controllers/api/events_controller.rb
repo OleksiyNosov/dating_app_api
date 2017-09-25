@@ -13,7 +13,7 @@ class Api::EventsController < ApplicationController
   end
 
   def build_resource
-    @event = Event.create resource_params.merge user_id: current_user.id
+    @event = Event.new resource_params.merge user_id: current_user.id
 
     params[:event][:invites].each { |id| @event.create_invite_if_not_exist User.find(id.to_i) }
   end
