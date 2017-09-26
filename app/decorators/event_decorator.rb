@@ -30,9 +30,7 @@ class EventDecorator < ApplicationDecorator
 
   private
   def _only
-    return %I[id kind title description] if context[:full]
-
-    return %I[id kind title description] if context[:short]
+    return %I[id kind title description]
   end
 
   def _methods
