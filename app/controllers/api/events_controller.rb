@@ -6,7 +6,7 @@ class Api::EventsController < ApplicationController
 
   private
   def collection
-    @events ||= Event.all
+    @events = EventSearcher.search params.merge current_user: current_user
   end
 
   def resource
