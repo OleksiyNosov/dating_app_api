@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     resource :profile, only: [:show, :create, :update] do
       resource :avatar, only: [:create, :destroy]
 
-      resources :invites, only: [:index, :show, :update], controller: :profile_invites
+      resources :invites, only: [:index, :show, :update], controller: :'profiles/invites'
     end
 
     resources :users, only: [:index, :show] do
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
 
     resources :events, except: [:new, :edit] do
-      resources :invites, only: [:index, :show, :create], controller: :event_invites
+      resources :invites, only: [:index, :show, :create], controller: :'events/invites'
     end
   end
 end
