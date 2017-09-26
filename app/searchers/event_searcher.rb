@@ -1,7 +1,7 @@
 class EventSearcher < ApplicationSearcher
   private
   def initialize_results
-    @results = Event.all
+    @results = Event.where(kind: :public_event, user_id: @params[:current_user].id)
   end
 
   def search_by_start_date start_date
