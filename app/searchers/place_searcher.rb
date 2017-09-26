@@ -19,8 +19,9 @@ class PlaceSearcher < ApplicationSearcher
   def search_by_range range
     return unless range
 
-    @results = @results.select(build_select_query(@params[:current_user], 'places', 'distance'))
-                       .where(build_where_query_by_range(@params[:current_user], km_to_miles(range.to_f), 'places'))
-                       .order('distance')
+    @results = @results
+      .select(build_select_query(@params[:current_user], 'places', 'distance'))
+      .where(build_where_query_by_range(@params[:current_user], km_to_miles(range.to_f), 'places'))
+      .order('distance')
   end
 end
