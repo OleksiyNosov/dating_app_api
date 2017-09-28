@@ -17,11 +17,11 @@ class PlaceSearcher < ApplicationSearcher
   end
 
   def search_by_range range
-    return unless range
+    return unless range.present?
 
     @results = @results
-      .select(build_select_query(@params[:current_user], 'places', 'distance'))
-      .where(build_where_query_by_range(@params[:current_user], km_to_miles(range.to_f), 'places'))
+      .select("places.*, earth_distance(ll_to_earth(#{ user.lat }, #{ user.lng }), ll_to_earth(places.lat, places.lng)) AS distance")
+      .where("earth_box(ll_to_earth(?, ?), ?) @> ll_to_earth(places.lat, places.lng)", user.lat, user.lng, range.to_f)
       .order('distance')
   end
 end
