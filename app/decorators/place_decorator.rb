@@ -16,7 +16,7 @@ class PlaceDecorator < ApplicationDecorator
   end
 
   def distance
-    object.respond_to?(:distance) ? m_to_km(object&.distance).round(2) : nil
+    object.respond_to?(:distance) ? m_to_km(object.distance).round(2) : nil
   end
 
   private
