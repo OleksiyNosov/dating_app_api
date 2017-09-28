@@ -1,6 +1,6 @@
 class ApplicationSearcher
   include SimpleMathOperations
-  
+
   def initialize params={}
     @params = params
   end
@@ -9,6 +9,8 @@ class ApplicationSearcher
     initialize_results
 
     @params.each do |attribute, value|
+      next if attribute == :current_user
+
       method_name = :"search_by_#{ attribute }"
 
       send method_name, value if respond_to?(method_name, true)
@@ -50,5 +52,9 @@ class ApplicationSearcher
 
   def build_point_for table
     "point(#{ table }.lng, #{ table }.lat)"
+  end
+
+  def user
+    @user ||= @params[:current_user]
   end
 end
