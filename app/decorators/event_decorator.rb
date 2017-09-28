@@ -17,11 +17,11 @@ class EventDecorator < ApplicationDecorator
   end
 
   def people_attended_count
-    object.invites.where(respond: :attend).count
+    object.invites.attend.count
   end
 
   def people_attended
-    object.invites.where(respond: :attend).map { |invite| invite.user.decorate(context: { short: true }) }
+    object.invites.attend.map { |invite| invite.user.decorate(context: { short: true }) }
   end
 
   def invites
