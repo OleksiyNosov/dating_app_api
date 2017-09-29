@@ -20,8 +20,4 @@ class User < ApplicationRecord
   def create_auth_token
     AuthToken.create value: SecureRandom.uuid, user: self, expired_at: Time.zone.now + 2.weeks
   end
-
-  def distance_to place
-    earth_distance_between self.lat, self.lng, place.lat, place.lng
-  end
 end

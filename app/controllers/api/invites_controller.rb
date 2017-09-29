@@ -5,6 +5,6 @@ class Api::InvitesController < ApplicationController
   end
 
   def resource
-    @invite ||= parent.find params[:id]
+    @invite ||= collection.find params[:id]
   end
 end
