@@ -24,21 +24,32 @@ RSpec.describe Api::Events::InvitesController, type: :controller do
   end
 
   describe '#create' do
-    let(:params) { { event_id: '5' } }
-
     let(:invite_params) { { user_id: '2' } }
 
-    let(:invites) { double }
+    let(:params) { { invite: invite_params, event_id: '5' } }
+
+    let(:invite) { stub_model Invite }
 
     before { sign_in }
 
-    before { expect(subject).to receive(:collection).and_return(invites) }
+    before do
+      #
+      # -> parent.invites.build
+      #
+      expect(subject).to receive(:parent) do
+        double.tap do |a|
+          expect(a).to receive(:invites) do
+            double.tap { |b| expect(b).to receive(:build).with(permit! invite_params).and_return invite }
+          end 
+        end
+      end
+    end
 
-    before { expect(invites).to receive(:build).with(permit! invite_params).and_return(invite) }
+    before { expect(invite).to receive(:save!) }
 
     before { process :create, method: :post, params: params, format: :json }
 
-    xit { should render_template :create }
+    it { should render_template :create }
   end
 
   describe '#parent' do
