@@ -3,7 +3,7 @@ class Api::Events::InvitesController < Api::InvitesController
 
   private
   def build_resource
-    @invite = Event.invites.build resource_params
+    @invite = parent.invites.build resource_params
   end
 
   def resource_params
