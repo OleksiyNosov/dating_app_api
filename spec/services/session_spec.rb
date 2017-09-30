@@ -60,17 +60,32 @@ RSpec.describe Session do
   end
 
   describe '#auth_token' do
-    let(:user) { stub_model User }
+    context 'user exist' do
+      let(:auth_token) { stub_model AuthToken }
 
-    let(:auth_token) { stub_model AuthToken }
+      before { expect(subject).to receive(:user).and_return true }
 
-    before do
-      expect(user).to receive(:auth_tokens) do
-        double.tap { |a| expect(a).to receive(:last).and_return(auth_token) }
+      before do
+        #
+        # => user.auth_tokens.last
+        #
+        expect(subject).to receive(:user) do
+          double.tap do |a|
+            expect(a).to receive(:auth_tokens) do
+              double.tap { |b| expect(b).to receive(:last).and_return auth_token }
+            end 
+          end
+        end
       end
+
+      its(:auth_token) { should eq auth_token }
     end
 
-    xit(:auth_token) { should eq auth_token }
+    context 'user not exist' do
+      before { expect(subject).to receive(:user).and_return false }
+
+      its(:auth_token) { should eq nil }
+    end
   end
 
   describe '#user' do
