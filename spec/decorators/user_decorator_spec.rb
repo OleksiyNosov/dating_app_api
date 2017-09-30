@@ -1,40 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe UserDecorator do
-  describe '#full_name' do
-    let(:first_name) { 'John' }
+  let(:user) { stub_model User, first_name: 'John', last_name: 'Smith', lat: 28.3, lng: 48.5 }
 
-    let(:last_name) { 'Smith' }
+  subject { user.decorate }
 
-    before do 
-      expect(subject).to receive(:object) do
-        double.tap { |a| expect(a).to receive(:first_name).and_return(first_name) }
-      end 
-    end
+  describe '#full_name' do its(:full_name) { should eq "John Smith" } end
 
-    before { expect(subject).to receive(:last_name).and_return(last_name) }
-
-    let(:result) { "#{ first_name } #{ last_name }" }
-
-    xit(:full_name) { should eq result }
-  end
+  describe '#coords' do its(:coords) { should eq lat: 28.3, lng: 48.5 } end
 
   describe '#age' do
 
   end
 
-  describe '#coords' do
-    let(:lat) { 28.3 }
-
-    let(:lng) { 48.5 }
-
-    let(:result) { { lat: lat, lng: lng } }
-
-    xit(:coords) { should eq result }
-  end
-
-  describe '#avatar' do
-    xit { }
+  describe '#avatar' do 
+    xit(:avatar) { should eq original_url: 'original_url', thumb_url: 'thumb_url' } 
   end
 
   describe '#collection' do
@@ -42,15 +22,16 @@ RSpec.describe UserDecorator do
 
     let(:place_users) { double }
 
-    let(:collection) { double }
-
-    before { expect(subject).to receive(:place_users).and_return(place_users) }
+    before { expect(subject).to receive(:place_users).and_return place_users }
 
     before do 
-      expect(PlaceUserDecorator).to receive(:decorate_collection).with(place_users, context).and_return(collection) 
+      #
+      # => PlaceUserDecorator.decorate_collection
+      #
+      expect(PlaceUserDecorator).to receive(:decorate_collection).with(place_users, context).and_return :collection 
     end
 
-    xit(:collection) { should eq collection }
+    its(:collection) { should eq :collection }
   end
 
   describe '#as_json' do
