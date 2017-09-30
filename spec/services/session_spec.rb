@@ -89,13 +89,9 @@ RSpec.describe Session do
   end
 
   describe '#user' do
-    let(:email_value) { 'test@test.com' }
-
     let(:user) { stub_model User }
 
-    before { expect(subject).to receive(:email).and_return(email_value) }
-
-    before { expect(User).to receive(:find_by).with(email: email_value).and_return(user) }
+    before { expect(User).to receive(:find_by).with(email: 'test@test.com').and_return user }
 
     its(:user) { should eq user }
   end
