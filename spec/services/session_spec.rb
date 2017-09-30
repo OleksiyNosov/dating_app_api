@@ -1,48 +1,62 @@
 require 'rails_helper'
 
 RSpec.describe Session do
+  let(:session) { Session.new email: 'test@test.com', password: 'qwerty' }
+
+  subject { session }
+
   describe '#initialize' do
     let(:user) { stub_model User }
 
     let(:params) { { user: user, email: 'test@test.com', password: 'qwerty' } }
 
-    xit { }
+    its(:email) { should eq 'test@test.com' }
+
+    its(:password) { should eq 'qwerty' }
+
+    it { expect { Session.new params }.to_not raise_error }
   end
 
   describe '#save!' do
-    let(:password) { 'qwerty' }
+    context 'valid' do
+      let(:auth_token) { stub_model AuthToken }
 
-    let(:user) { stub_model User, valid?: true }
+      before { expect(subject).to receive(:valid?).and_return true }
 
-    let(:auth_token) { stub_model AuthToken }
-
-    before { expect(subject).to receive(:user).and_return(user) }
-
-    before { expect(subject).to receive(:password).and_return(password) }
-
-    before do 
-      expect(subject).to receive(:user) do
-        double.tap { |a| expect(a).to receive(:authenticate).with(password) }
+      before do
+        #
+        # => user.create_auth_token
+        #
+        expect(subject).to receive(:user) do
+          double.tap { |a| expect(a).to receive(:create_auth_token).and_return auth_token }
+        end
       end
+
+      its(:save!) { should eq auth_token }
     end
 
-    before { expect(subject).to receive(:user).and_return(user) }
+    context 'not valid' do
+      before { expect(subject).to receive(:valid?).and_return false }
 
-    before { expect(user).to receive(:create_auth_token).and_return(auth_token) }
-
-    xit(:save!) { should eq auth_token }
+      it { expect { subject.save! }.to raise_error ActiveModel::StrictValidationFailed }
+    end
   end
 
   describe '#destroy!' do
-    let(:user) { stub_model User }
-
-    before do 
-      expect(user).to receive(:auth_tokens) do
-        double.tap { |a| expect(a).to receive(:destroy_all) }
+    before do
+      #
+      # => user.auth_token.destroy_all
+      #
+      expect(subject).to receive(:user) do
+        double.tap do |a| 
+          expect(a).to receive(:auth_tokens) do
+            double.tap { |b| expect(b).to receive(:destroy_all) }
+          end
+        end
       end
     end
 
-    xit { }
+    it { expect { subject.destroy! }.to_not raise_error }
   end
 
   describe '#auth_token' do
