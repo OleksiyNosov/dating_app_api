@@ -72,4 +72,33 @@ RSpec.describe Api::EventsController, type: :controller do
 
     its(:collection) { should eq :collection }
   end
+
+  describe '#add_new_invites' do
+    before do
+      #
+      # -> params[:event][:invites].uniq.map(&:to_i).each
+      #
+      expect(subject).to receive(:params) do
+        double.tap do |a|
+          expect(a).to receive(:[]).with(:event) do
+            double.tap do |b| 
+              expect(b).to receive(:[]).with(:invites) do
+                double.tap do |c| 
+                  expect(c).to receive(:uniq) do
+                    double.tap do |d| 
+                      expect(d).to receive(:map) do
+                        double.tap { |e| expect(e).to receive(:each).and_return :result }
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end  
+      end
+    end
+
+    its(:add_new_invites) { should eq :result }
+  end
 end
