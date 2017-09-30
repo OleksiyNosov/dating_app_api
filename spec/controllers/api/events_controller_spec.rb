@@ -47,4 +47,29 @@ RSpec.describe Api::EventsController, type: :controller do
 
     it { should render_template :create }
   end
+
+  describe '#collection' do
+    let(:user) { stub_model User }
+
+    let(:params) { {
+      place_id: '3', title: 'Party', description: 'Blackout 1 love',
+      kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
+      current_user: user 
+    } }
+
+    before { sign_in user }
+
+    before { expect(subject).to receive(:params).and_return params }
+
+    before do
+      #
+      # -> EventSearcher.search
+      #
+      expect(EventSearcher).to receive(:new).with(params) do
+        double.tap { |a| expect(a).to receive(:search).and_return :collection }
+      end
+    end
+
+    its(:collection) { should eq :collection }
+  end
 end
