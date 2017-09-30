@@ -15,6 +15,8 @@ RSpec.describe Event, type: :model do
   
   it { should validate_presence_of :title }
 
+  it { should define_enum_for(:kind).with([:public_event, :private_event, :friends_only]) }
+
   describe '#new_invite_if_not_exist' do
     let(:invited_user) { stub_model User }
 
