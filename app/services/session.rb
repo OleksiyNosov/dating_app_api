@@ -26,7 +26,7 @@ class Session
   end
 
   def auth_token
-    user&.auth_tokens&.last
+    user.auth_tokens.last if user
   end
 
   def user

@@ -15,39 +15,44 @@ RSpec.describe Event, type: :model do
   
   it { should validate_presence_of :title }
 
+  it { should define_enum_for(:kind).with([:public_event, :private_event, :friends_only]) }
+
   describe '#new_invite_if_not_exist' do
+    let(:invited_user) { stub_model User }
+
     context 'user not exist' do
-      let(:invites) { double }
-
-      let(:invited_user) { double }
-
       before do
+        #
+        # => invites.find_by
+        #
         expect(subject).to receive(:invites) do
-          double.tap { |a| expect(a).to receive(:find_by).with(user: invited_user).and_return(false) }
+          double.tap { |a| expect(a).to receive(:find_by).with(user: invited_user).and_return false }
         end
       end
 
       before do
+        #
+        # => invites.build
+        #
         expect(subject).to receive(:invites) do
           double.tap { |a| expect(a).to receive(:build).with(user: invited_user) }
         end
       end
 
-      xit(:new_invite_if_not_exist) { should eq invited_user }
+      it { expect { subject.new_invite_if_not_exist invited_user }.to_not raise_error }
     end
 
     context 'user already exist' do
-      let(:invites) { double }
-
-      let(:invited_user) { stub_model User }
-
       before do
+        #
+        # => invites.find_by
+        #
         expect(subject).to receive(:invites) do
-          double.tap { |a| expect(a).to receive(:find_by).with(user: invited_user).and_return(true) }
+          double.tap { |a| expect(a).to receive(:find_by).with(user: invited_user).and_return true }
         end
       end
 
-        xit { expect { subject.new_invite_if_not_exist }.to_not raise_error }
+      it { expect { subject.new_invite_if_not_exist invited_user }.to_not raise_error }
     end
   end
 end

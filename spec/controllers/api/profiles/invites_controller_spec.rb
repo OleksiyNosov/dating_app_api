@@ -22,23 +22,24 @@ RSpec.describe Api::Profiles::InvitesController, type: :controller do
   end
 
   describe '#update' do
-    let(:invite_params) { { respond: :attend } }
+    let(:invite_params) { { respond: 'attend' } }
 
     let(:params) { { invite: invite_params, id: '7' } } 
 
-    let(:invites) { double }
-
     let(:invite) { stub_model Invite }
-
-    let(:user) { stub_model User }
 
     before { sign_in }
 
-    before { expect(subject).to receive(:collection).and_return(invites) }
+    before do
+      #
+      # -> collection.find
+      #
+      expect(subject).to receive(:collection) do
+        double.tap { |a| expect(a).to receive(:find).with('7').and_return invite }
+      end
+    end
 
-    before { expect(invites).to receive(:find).with('7').and_return(invite) }
-
-    before { expect(invite).to receive(:update!) }
+    before { expect(invite).to receive(:update!).with(permit! invite_params).and_return invite }
 
     before { process :update, method: :patch, params: params, format: :json }
 
