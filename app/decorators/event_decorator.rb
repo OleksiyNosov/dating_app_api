@@ -1,4 +1,6 @@
 class EventDecorator < ApplicationDecorator
+  ATTRS = %i[id kind title description]
+
   delegate_all
 
   decorates_association :place, context: { short: true }
@@ -30,12 +32,12 @@ class EventDecorator < ApplicationDecorator
 
   private
   def _only
-    return %I[id kind title description]
+    ATTRS
   end
 
   def _methods
-    return %I[place date time author people_attended_count people_attended invites] if context[:full]
+    return %i[place date time author people_attended_count people_attended invites] if context[:full]
 
-    return %I[place date time] if context[:short]
+    return %i[place date time] if context[:short]
   end
 end

@@ -1,4 +1,6 @@
 class InviteDecorator < ApplicationDecorator
+  ATTRS = %i[id respond]
+
   delegate_all
 
   decorates_association :user, context: { short: true }
@@ -6,12 +8,12 @@ class InviteDecorator < ApplicationDecorator
 
   private
   def _only
-    %I[id respond]
+    ATTRS
   end
 
   def _methods
-    return %I[user] if context[:with_user]
+    return %i[user] if context[:with_user]
 
-    return %I[event] if context[:with_event]
+    return %i[event] if context[:with_event]
   end
 end

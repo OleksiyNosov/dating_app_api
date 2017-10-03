@@ -21,19 +21,19 @@ class PlaceDecorator < ApplicationDecorator
 
   private
   def _only
-    result = %I[id name place_id city overall_rating]
+    result = %i[id name place_id city overall_rating]
 
     return result if context[:short]
 
-    result += %I[tags] 
+    result += %i[tags] 
   end
 
   def _methods
-    result = %I[coords]
+    result = %i[coords]
 
-    result += %I[ratings] if context[:place_user_ratings]
+    result += %i[ratings] if context[:place_user_ratings]
 
-    result += %I[distance] if context[:with_distance]
+    result += %i[distance] if context[:with_distance]
 
     result
   end
