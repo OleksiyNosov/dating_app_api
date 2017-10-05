@@ -19,4 +19,7 @@
 /node_modules
 /yarn-error.log
 
+# Ignore config files
+config/database.yml
+
 .byebug_history
