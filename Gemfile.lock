@@ -61,6 +61,11 @@ GEM
     email_validator (1.6.0)
       activemodel
     erubi (1.6.1)
+    factory_girl (4.8.1)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.8.0)
+      factory_girl (~> 4.8.0)
+      railties (>= 3.0.0)
     faker (1.8.4)
       i18n (~> 0.5)
     ffi (1.9.18)
@@ -192,6 +197,7 @@ DEPENDENCIES
   bcrypt
   draper
   email_validator
+  factory_girl_rails
   faker
   listen
   paperclip
