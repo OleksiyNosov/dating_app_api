@@ -5,10 +5,10 @@ class Api::UserRatingsController < ApplicationController
   end
 
   def parent
-    if params[:user_id] 
-      @parent = User.find params[:user_id]
-    else 
-      @parent = Place.find params[:place_id]
+    @parent = if params[:user_id]
+      User.find params[:user_id]
+    else
+      Place.find params[:place_id]
     end
   end
 end
