@@ -22,12 +22,12 @@ RSpec.describe Api::EventsController, type: :controller do
   end
 
   describe '#create' do
-    let(:invites) { ['15', '20'] }
+    let(:invites) { %w[15 20 30] }
 
     let(:event_params) { {
       place_id: '3', title: 'Party', description: 'Blackout 1 love',
       kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
-      invites: invites 
+      invites: invites
     } }
 
     let(:params) { { event: event_params } }
@@ -45,7 +45,7 @@ RSpec.describe Api::EventsController, type: :controller do
       # => params[:event][:invites]
       #
       expect(subject).to receive(:params) do
-        double.tap do |a| 
+        double.tap do |a|
           expect(a).to receive(:[]).with(:event) do
             double.tap { |b| expect(b).to receive(:[]).with(:invites).and_return invites }
           end
@@ -75,7 +75,7 @@ RSpec.describe Api::EventsController, type: :controller do
     let(:params) { {
       place_id: '3', title: 'Party', description: 'Blackout 1 love',
       kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
-      current_user: user 
+      current_user: user
     } }
 
     before { sign_in user }
@@ -91,6 +91,6 @@ RSpec.describe Api::EventsController, type: :controller do
       end
     end
 
-    its(:collection) { should eq :collection }
+    its(:collection) { is_expected.to eq :collection }
   end
 end
