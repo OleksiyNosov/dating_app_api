@@ -22,24 +22,45 @@ RSpec.describe Api::EventsController, type: :controller do
   end
 
   describe '#create' do
+    let(:invites) { ['15', '20'] }
+
     let(:event_params) { {
       place_id: '3', title: 'Party', description: 'Blackout 1 love',
-      kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300" 
+      kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
+      invites: invites 
     } }
 
     let(:params) { { event: event_params } }
 
     let(:user) { stub_model User, id: '2' }
 
-    let(:merged_event_params) { event_params.merge(user_id: user.id) }
-
     let(:event) { stub_model Event }
 
     before { sign_in user }
 
-    before { expect(Event).to receive(:new).with(permit! merged_event_params).and_return event }
+    before { expect(subject).to receive(:resource_params).and_return event_params }
 
-    before { expect(subject).to receive(:add_new_invites) }
+    before do
+      #
+      # => params[:event][:invites]
+      #
+      expect(subject).to receive(:params) do
+        double.tap do |a| 
+          expect(a).to receive(:[]).with(:event) do
+            double.tap { |b| expect(b).to receive(:[]).with(:invites).and_return invites }
+          end
+        end
+      end
+    end
+
+    before do
+      #
+      # => EventService.new().build_event
+      #
+      expect(EventService).to receive(:new).with(event_params, user, invites) do
+        double.tap { |a| expect(a).to receive(:build_event).and_return event }
+      end
+    end
 
     before { expect(event).to receive(:save!) }
 
@@ -71,34 +92,5 @@ RSpec.describe Api::EventsController, type: :controller do
     end
 
     its(:collection) { should eq :collection }
-  end
-
-  describe '#add_new_invites' do
-    before do
-      #
-      # -> params[:event][:invites].uniq.map(&:to_i).each
-      #
-      expect(subject).to receive(:params) do
-        double.tap do |a|
-          expect(a).to receive(:[]).with(:event) do
-            double.tap do |b| 
-              expect(b).to receive(:[]).with(:invites) do
-                double.tap do |c| 
-                  expect(c).to receive(:uniq) do
-                    double.tap do |d| 
-                      expect(d).to receive(:map) do
-                        double.tap { |e| expect(e).to receive(:each).and_return :result }
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end  
-      end
-    end
-
-    its(:add_new_invites) { should eq :result }
   end
 end
