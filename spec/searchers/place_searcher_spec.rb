@@ -20,7 +20,7 @@ RSpec.describe PlaceSearcher do
 
       before { expect(subject).to receive(:where).with(city: 'Vinnytsia').and_return :result }
 
-      xit(:search_by_city) { should eq :result }
+      xit(:search_by_city) { is_expected.to eq :result }
     end
 
     context 'city is not present' do
@@ -31,7 +31,7 @@ RSpec.describe PlaceSearcher do
         expect(subject).to receive(:present?).and_return false
       end
 
-      xit(:search_by_city) { should eq nil }
+      xit(:search_by_city) { is_expected.to eq nil }
     end
   end
 end

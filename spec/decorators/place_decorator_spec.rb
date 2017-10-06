@@ -63,7 +63,7 @@ RSpec.describe PlaceDecorator do
         end
       end
 
-      xit(:distance) { should eq 2500 }
+      xit(:distance) { is_expected.to eq 2500 }
     end
 
     context 'distance is not is query' do

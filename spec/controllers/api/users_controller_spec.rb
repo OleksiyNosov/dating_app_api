@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Api::UsersController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#index' do
     before { sign_in }
 
     before { process :index, method: :get, format: :json }
 
-    it { should render_template :index }
+    it { is_expected.to render_template :index }
   end
 
   describe '#show' do
@@ -18,7 +18,7 @@ RSpec.describe Api::UsersController, type: :controller do
 
     before { process :show, method: :get, params: params, format: :json }
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe '#collection' do

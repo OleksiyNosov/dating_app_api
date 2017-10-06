@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::PlacesController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#index' do
     let(:params) { { city: 'London', tags: ['beer', 'pizza'], range: '6' } }
@@ -10,7 +10,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     before { process :index, method: :get, params: params, format: :json }
 
-    it { should render_template :index }
+    it { is_expected.to render_template :index }
   end
 
   describe '#show' do
@@ -20,7 +20,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     before { process :show, method: :get, params: params, format: :json }
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe '#create' do
@@ -38,7 +38,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     before { process :create, method: :post, params: params, format: :json }
 
-    it { should render_template :create }
+    it { is_expected.to render_template :create }
   end
 
   describe '#update' do
@@ -56,7 +56,7 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     before { process :update, method: :patch, params: params, format: :json }
 
-    it { should render_template :update }
+    it { is_expected.to render_template :update }
   end
 
   describe '#collection' do

@@ -14,7 +14,7 @@ RSpec.describe UserDecorator do
   end
 
   describe '#avatar' do 
-    xit(:avatar) { should eq original_url: 'original_url', thumb_url: 'thumb_url' } 
+    xit(:avatar) { is_expected.to eq original_url: 'original_url', thumb_url: 'thumb_url' } 
   end
 
   describe '#collection' do

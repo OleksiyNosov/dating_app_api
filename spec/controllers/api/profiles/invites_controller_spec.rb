@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Api::Profiles::InvitesController, type: :controller do
-  it { should be_an Api::InvitesController }
+  it { is_expected.to be_an Api::InvitesController }
 
   describe '#index' do
     before { sign_in }
 
     before { process :index, method: :get, format: :json }
 
-    it { should render_template :index }
+    it { is_expected.to render_template :index }
   end
 
   describe '#show' do
@@ -18,7 +18,7 @@ RSpec.describe Api::Profiles::InvitesController, type: :controller do
 
     before { process :show, method: :get, params: params, format: :json }
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe '#update' do
@@ -43,7 +43,7 @@ RSpec.describe Api::Profiles::InvitesController, type: :controller do
 
     before { process :update, method: :patch, params: params, format: :json }
 
-    it { should render_template :update }
+    it { is_expected.to render_template :update }
   end  
 
   describe '#parent' do
