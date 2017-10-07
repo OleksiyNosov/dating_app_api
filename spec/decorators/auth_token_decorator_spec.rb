@@ -6,6 +6,6 @@ RSpec.describe AuthTokenDecorator do
   subject { auth_token.decorate }
 
   describe '#as_json' do
-    its('as_json.symbolize_keys') { should eq value: 'XXXX-YYYY-ZZZZ' }
+    its('as_json.symbolize_keys') { is_expected.to eq value: 'XXXX-YYYY-ZZZZ' }
   end
 end

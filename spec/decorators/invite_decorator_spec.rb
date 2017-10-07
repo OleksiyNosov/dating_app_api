@@ -12,7 +12,7 @@ RSpec.describe InviteDecorator do
       before { expect(subject).to receive(:user).and_return user }
 
       its(:'as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 7,
         respond: 'attend',
         user: user
@@ -27,7 +27,7 @@ RSpec.describe InviteDecorator do
       before { expect(subject).to receive(:event).and_return event }
 
       its(:'as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 7,
         respond: 'attend',
         event: event

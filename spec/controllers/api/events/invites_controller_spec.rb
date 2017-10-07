@@ -63,6 +63,6 @@ RSpec.describe Api::Events::InvitesController, type: :controller do
 
     before { expect(Event).to receive(:find).with('5').and_return(parent) }
 
-    its(:parent) { should eq parent }
+    its(:parent) { is_expected.to eq parent }
   end
 end

@@ -77,7 +77,7 @@ RSpec.describe Api::PlacesController, type: :controller do
       end
     end
 
-    its(:collection) { should eq :collection }
+    its(:collection) { is_expected.to eq :collection }
   end
 
   describe '#resource' do
@@ -96,6 +96,6 @@ RSpec.describe Api::PlacesController, type: :controller do
 
     before { expect(Place).to receive(:find).with(params).and_return(place) }
 
-    its(:resource) { should eq place }
+    its(:resource) { is_expected.to eq place }
   end
 end

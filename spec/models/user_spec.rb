@@ -55,6 +55,6 @@ RSpec.describe User, type: :model do
 
     before { expect(AuthToken).to receive(:create).with(params).and_return(auth_token) }
 
-    its(:create_auth_token) { should eq auth_token }
+    its(:create_auth_token) { is_expected.to eq auth_token }
   end
 end

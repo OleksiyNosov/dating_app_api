@@ -26,7 +26,7 @@ RSpec.describe AuthToken, type: :model do
 
       before { expect(subject).to receive(:expired_at).and_return time_expired_at }
 
-      its(:expired?) { should eq true }
+      its(:expired?) { is_expected.to eq true }
     end
 
     context 'not expired' do
@@ -34,7 +34,7 @@ RSpec.describe AuthToken, type: :model do
 
       before { expect(subject).to receive(:expired_at).and_return time_expired_at }
 
-      its(:expired?) { should eq false }
+      its(:expired?) { is_expected.to eq false }
     end
   end
 end

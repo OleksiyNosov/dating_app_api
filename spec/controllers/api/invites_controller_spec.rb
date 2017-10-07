@@ -13,6 +13,6 @@ RSpec.describe Api::InvitesController, type: :controller do
       end       
     end
 
-    its(:collection) { should eq :collection }
+    its(:collection) { is_expected.to eq :collection }
   end
 end

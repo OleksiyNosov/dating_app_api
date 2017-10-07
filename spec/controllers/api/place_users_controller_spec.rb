@@ -97,7 +97,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
       end
     end
 
-    its(:resource) { should eq place_user }
+    its(:resource) { is_expected.to eq place_user }
   end
 
   describe '#parent' do
@@ -116,6 +116,6 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     before { expect(Place).to receive(:find).with(params).and_return(parent) }
 
-    its(:parent) { should eq parent }
+    its(:parent) { is_expected.to eq parent }
   end
 end

@@ -10,9 +10,9 @@ RSpec.describe Session do
 
     let(:params) { { user: user, email: 'test@test.com', password: 'qwerty' } }
 
-    its(:email) { should eq 'test@test.com' }
+    its(:email) { is_expected.to eq 'test@test.com' }
 
-    its(:password) { should eq 'qwerty' }
+    its(:password) { is_expected.to eq 'qwerty' }
 
     it { expect { Session.new params }.to_not raise_error }
   end
@@ -32,7 +32,7 @@ RSpec.describe Session do
         end
       end
 
-      its(:save!) { should eq auth_token }
+      its(:save!) { is_expected.to eq auth_token }
     end
 
     context 'not valid' do
@@ -78,13 +78,13 @@ RSpec.describe Session do
         end
       end
 
-      its(:auth_token) { should eq auth_token }
+      its(:auth_token) { is_expected.to eq auth_token }
     end
 
     context 'user not exist' do
       before { expect(subject).to receive(:user).and_return false }
 
-      its(:auth_token) { should eq nil }
+      its(:auth_token) { is_expected.to eq nil }
     end
   end
 
@@ -93,6 +93,6 @@ RSpec.describe Session do
 
     before { expect(User).to receive(:find_by).with(email: 'test@test.com').and_return user }
 
-    its(:user) { should eq user }
+    its(:user) { is_expected.to eq user }
   end
 end

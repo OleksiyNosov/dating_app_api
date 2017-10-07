@@ -19,7 +19,7 @@ RSpec.describe EventDecorator do
       end
     end
 
-    its(:date) { should eq '2017-9-30' }
+    its(:date) { is_expected.to eq '2017-9-30' }
   end
 
   describe '#time' do
@@ -32,7 +32,7 @@ RSpec.describe EventDecorator do
       end
     end
 
-    its(:time) { should eq '23:36' }
+    its(:time) { is_expected.to eq '23:36' }
   end
 
   describe '#author' do  
@@ -40,7 +40,7 @@ RSpec.describe EventDecorator do
 
     before { expect(subject).to receive(:user).and_return user }
 
-    its(:author) { should eq user }
+    its(:author) { is_expected.to eq user }
   end
 
   describe '#people_attended_count' do
@@ -61,7 +61,7 @@ RSpec.describe EventDecorator do
       end
     end
 
-    its(:people_attended_count) { should eq 4 }
+    its(:people_attended_count) { is_expected.to eq 4 }
   end
 
   describe '#people_attended' do
@@ -82,7 +82,7 @@ RSpec.describe EventDecorator do
       end
     end
 
-    its(:people_attended) { should eq :people_attended }
+    its(:people_attended) { is_expected.to eq :people_attended }
   end
 
   describe '#invites' do
@@ -99,7 +99,7 @@ RSpec.describe EventDecorator do
       end
     end
 
-    its(:invites) { should eq :invites }
+    its(:invites) { is_expected.to eq :invites }
   end
 
   describe '#as_json' do
@@ -115,7 +115,7 @@ RSpec.describe EventDecorator do
       before { expect(subject).to receive(:time).and_return '23:36' }
 
       its(:'as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 5,
         kind: 'public_event',
         title: 'Party',
@@ -148,7 +148,7 @@ RSpec.describe EventDecorator do
       before { expect(subject).to receive(:invites).and_return :invites }
 
       its(:'as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 5,
         kind: 'public_event',
         title: 'Party',

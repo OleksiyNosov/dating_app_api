@@ -7,14 +7,14 @@ RSpec.describe PlaceUserDecorator do
     context do
       subject { place_user.decorate }
 
-      its('as_json.symbolize_keys') { should eq place: place_user.place }
+      its('as_json.symbolize_keys') { is_expected.to eq place: place_user.place }
     end
 
     context 'user_user_ratings' do
       subject { place_user.decorate(context: { user_user_ratings: true }) }
 
       its('as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         rating: 4,
         place:  place_user.place
       end

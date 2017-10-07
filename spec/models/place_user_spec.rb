@@ -31,6 +31,6 @@ RSpec.describe PlaceUser, type: :model do
 
     before { expect(place).to receive(:update!).with(overall_rating: overall_rating).and_return(place) }
 
-    its(:recalculate_overall_rating) { should eq place }
+    its(:recalculate_overall_rating) { is_expected.to eq place }
   end
 end

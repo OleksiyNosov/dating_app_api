@@ -51,6 +51,6 @@ RSpec.describe Api::Profiles::InvitesController, type: :controller do
 
     before { expect(subject).to receive(:current_user).and_return(parent) }
 
-    its(:parent) { should eq parent }
+    its(:parent) { is_expected.to eq parent }
   end
 end
