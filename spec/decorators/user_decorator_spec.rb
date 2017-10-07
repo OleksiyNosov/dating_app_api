@@ -14,7 +14,33 @@ RSpec.describe UserDecorator do
   end
 
   describe '#avatar' do 
-    xit(:avatar) { is_expected.to eq original_url: 'original_url', thumb_url: 'thumb_url' } 
+    before do 
+      #
+      # => object.avatar.url
+      #
+      expect(subject).to receive(:object) do
+        double.tap do |a|
+          expect(a).to receive(:avatar) do
+            double.tap { |b| expect(b).to receive(:url).and_return 'original_url' }
+          end
+        end
+      end 
+    end
+
+    before do
+      #
+      # => object.avatar.url
+      # 
+      expect(subject).to receive(:object) do
+        double.tap do |a|
+          expect(a).to receive(:avatar) do
+            double.tap { |b| expect(b).to receive(:url).with(:thumb).and_return 'thumb_url' }
+          end
+        end
+      end 
+    end
+
+    its(:avatar) { is_expected.to eq original_url: 'original_url', thumb_url: 'thumb_url' } 
   end
 
   describe '#collection' do
