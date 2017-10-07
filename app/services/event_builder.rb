@@ -1,6 +1,4 @@
-class EventService 
-  attr_reader :resource_params, :invites, :event
-
+class EventBuilder 
   def initialize resource_params, user, invites
     @resource_params = resource_params.merge user_id: user.id
 
@@ -12,10 +10,11 @@ class EventService
   
     add_invites_to_event
   
-    event
+    @event
   end
 
+  private
   def add_invites_to_event
-    invites.each { |id| event.new_invite_if_not_exist User.find id }
+    invites.each { |id| @event.new_invite_if_not_exist User.find id }
   end
 end
