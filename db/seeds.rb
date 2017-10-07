@@ -1,4 +1,4 @@
-require File.join(Rails.root, 'db', 'seeds_helper')
+require File.join(Rails.root, 'db', 'combinator')
 
 puts 'Create Rng'
 
@@ -13,11 +13,10 @@ puts "Create #{ places_numb } places"
 places = FactoryGirl.create_list :place, places_numb
 
 puts "Create #{ place_users_numb } place_user (users reviews)"
-place_users_numb.times do
-  PlaceUser.create \
-    user_id:  users.sample.id,
-    place_id: places.sample.id,
-    rating:   gen_rating,
-    review:   gen_quote
-end
+combinator = Combinator.new places, users
 
+place_users = place_users_numb.times.map do 
+  pair = combinator.delete_random_pair
+
+  FactoryGirl.create(:place_user, place: pair[0], user: pair[1]) 
+end
