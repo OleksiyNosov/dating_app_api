@@ -14,7 +14,7 @@ class Api::EventsController < ApplicationController
   end
 
   def build_resource
-    @event = EventService.new(resource_params, current_user, params[:event][:invites]).build_event
+    @event = EventBuilder.new(resource_params, current_user, params[:event][:invites]).build_event
   end
 
   def resource_params

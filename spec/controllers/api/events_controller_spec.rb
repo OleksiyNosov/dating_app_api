@@ -55,9 +55,9 @@ RSpec.describe Api::EventsController, type: :controller do
 
     before do
       #
-      # => EventService.new().build_event
+      # => EventBuilder.new().build_event
       #
-      expect(EventService).to receive(:new).with(event_params, user, invites) do
+      expect(EventBuilder).to receive(:new).with(event_params, user, invites) do
         double.tap { |a| expect(a).to receive(:build_event).and_return event }
       end
     end
