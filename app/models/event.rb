@@ -4,7 +4,7 @@ class Event < ApplicationRecord
   belongs_to :place
   belongs_to :user
 
-  has_many :invites
+  has_many :invites, dependent: :destroy
 
   validates :place, :user, :title, presence: true
 
