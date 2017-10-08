@@ -7,11 +7,11 @@ class EventDecorator < ApplicationDecorator
   decorates_association :user, context: { short: true }
 
   def date
-    start_time.strftime "%F"
+    start_time.strftime '%F'
   end
 
   def time
-    start_time.strftime "%H:%M"
+    start_time.strftime '%H:%M'
   end
 
   def author
@@ -19,11 +19,11 @@ class EventDecorator < ApplicationDecorator
   end
 
   def people_attended_count
-    object.invites.attend.count
+    object.people_attend.count
   end
 
   def people_attended
-    object.invites.attend.map { |invite| invite.user.decorate(context: { short: true }) }
+    object.people_attend.decorate(context: { short: true })
   end
 
   def invites
