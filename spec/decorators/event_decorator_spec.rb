@@ -2,9 +2,14 @@ require 'rails_helper'
 
 RSpec.describe EventDecorator do
   let(:event) do
-    stub_model Event, id: 5, user_id: 2, place_id: 3, 
-    title: 'Party', description: 'Blackout 1 love',
-    kind: 'public_event', start_time: Time.new(2017, 9, 30, 23, 36) 
+    stub_model Event,
+    id: 5,
+    user_id: 2,
+    place_id: 3,
+    title: 'Party',
+    description: 'Blackout 1 love',
+    kind: 'public_event',
+    start_time: Time.new(2017, 9, 30, 23, 36)
   end
 
   subject { event.decorate }
@@ -35,7 +40,7 @@ RSpec.describe EventDecorator do
     its(:time) { is_expected.to eq '23:36' }
   end
 
-  describe '#author' do  
+  describe '#author' do
     let(:user) { stub_model User }
 
     before { expect(subject).to receive(:user).and_return user }
@@ -43,7 +48,7 @@ RSpec.describe EventDecorator do
     its(:author) { is_expected.to eq user }
   end
 
-  describe '#people_attended_count' do
+  describe '#people_attend_count' do
     before do
       #
       # => object.people_attend.count
@@ -57,10 +62,10 @@ RSpec.describe EventDecorator do
       end
     end
 
-    its(:people_attended_count) { is_expected.to eq 4 }
+    its(:people_attend_count) { is_expected.to eq 4 }
   end
 
-  describe '#people_attended' do
+  describe '#people_attend' do
     before do
       #
       # => object.people_attend.decorate
@@ -74,7 +79,7 @@ RSpec.describe EventDecorator do
       end
     end
 
-    its(:people_attended) { is_expected.to eq :people_attend }
+    its(:people_attend) { is_expected.to eq :people_attend }
   end
 
   describe '#invites' do
@@ -85,7 +90,7 @@ RSpec.describe EventDecorator do
       expect(subject).to receive(:object) do
         double.tap do |a|
           expect(a).to receive(:invites) do
-            double.tap { |b| expect(b).to receive(:decorate).with(context: { with_user: true }).and_return :invites } 
+            double.tap { |b| expect(b).to receive(:decorate).with(context: { with_user: true }).and_return :invites }
           end
         end
       end
@@ -133,9 +138,9 @@ RSpec.describe EventDecorator do
 
       before { expect(subject).to receive(:time).and_return '23:36' }
 
-      before { expect(subject).to receive(:people_attended_count).and_return 4 }
+      before { expect(subject).to receive(:people_attend_count).and_return 4 }
 
-      before { expect(subject).to receive(:people_attended).and_return :people_attended }
+      before { expect(subject).to receive(:people_attend).and_return :people_attend }
 
       before { expect(subject).to receive(:invites).and_return :invites }
 
@@ -149,8 +154,8 @@ RSpec.describe EventDecorator do
         date: '2017-9-30',
         time: '23:36',
         author: author,
-        people_attended_count: 4,
-        people_attended: :people_attended,
+        people_attend_count: 4,
+        people_attend: :people_attend,
         invites: :invites
       end
     end

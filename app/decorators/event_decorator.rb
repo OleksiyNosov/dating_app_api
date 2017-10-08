@@ -18,11 +18,11 @@ class EventDecorator < ApplicationDecorator
     user
   end
 
-  def people_attended_count
+  def people_attend_count
     object.people_attend.count
   end
 
-  def people_attended
+  def people_attend
     object.people_attend.decorate(context: { short: true })
   end
 
@@ -36,7 +36,7 @@ class EventDecorator < ApplicationDecorator
   end
 
   def _methods
-    return %i[place date time author people_attended_count people_attended invites] if context[:full]
+    return %i[place date time author people_attend_count people_attend invites] if context[:full]
 
     return %i[place date time] if context[:short]
   end
