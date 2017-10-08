@@ -46,16 +46,12 @@ RSpec.describe EventDecorator do
   describe '#people_attended_count' do
     before do
       #
-      # => object.invites.attend.count
+      # => object.people_attend.count
       #
       expect(subject).to receive(:object) do
         double.tap do |a|
-          expect(a).to receive(:invites) do
-            double.tap do |b|
-              expect(b).to receive(:attend) do
-                double.tap { |c| expect(c).to receive(:count).and_return 4 }
-              end
-            end
+          expect(a).to receive(:people_attend) do
+            double.tap { |b| expect(b).to receive(:count).and_return 4 }
           end
         end
       end
@@ -67,22 +63,18 @@ RSpec.describe EventDecorator do
   describe '#people_attended' do
     before do
       #
-      # => object.invites.attend.map
+      # => object.people_attend.decorate
       #
       expect(subject).to receive(:object) do
         double.tap do |a|
-          expect(a).to receive(:invites) do
-            double.tap do |b|
-              expect(b).to receive(:attend) do
-                double.tap { |c| expect(c).to receive(:map).and_return :people_attended }
-              end
-            end
+          expect(a).to receive(:people_attend) do
+            double.tap { |b| expect(b).to receive(:decorate).with(context: { short: true }).and_return :people_attend }
           end
         end
       end
     end
 
-    its(:people_attended) { is_expected.to eq :people_attended }
+    its(:people_attended) { is_expected.to eq :people_attend }
   end
 
   describe '#invites' do
