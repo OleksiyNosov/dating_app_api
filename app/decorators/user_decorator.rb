@@ -5,14 +5,11 @@ class UserDecorator < ApplicationDecorator
   decorates_association :place_users
 
   def full_name
-    "#{ first_name } #{ last_name }"  
+    "#{ first_name } #{ last_name }"
   end
 
   def age
-    years  = Time.zone.now.year - birthday.year
-    y_days = Time.zone.now.yday - birthday.yday
-    
-    y_days < 0 ? years - 1 : years
+    TimeCalculator.years_ago birthday
   end
 
   def coords
