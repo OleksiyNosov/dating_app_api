@@ -14,7 +14,7 @@ It's main idea to provide easy and reliable api for social app with following:
 # Requirements
 - Ruby 2.4.1
 - Rails 5.1.3
-- PostgreSQL
+- PostgreSQL 9.5.8
 
 # Setup
 
