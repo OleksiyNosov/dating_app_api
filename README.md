@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/OleksiyNosov/dating_app_api/badges/gpa.svg)](https://codeclimate.com/github/OleksiyNosov/dating_app_api)
+
 # Dating App Api
 It's main idea to provide easy and reliable api for social app with following:
 
