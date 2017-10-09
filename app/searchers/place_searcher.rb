@@ -7,7 +7,7 @@ class PlaceSearcher < ApplicationSearcher
   def search_by_city city
     return unless city.present?
 
-    @results = @results.where city: city
+    @results = @results.where('lower(places.city) = ?', city.downcase)
   end
 
   def search_by_tags tags
