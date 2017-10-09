@@ -15,6 +15,6 @@ class EventBuilder
 
   private
   def add_invites_to_event
-    @invites.each { |id| @event.new_invite_if_not_exist User.find id }
+    @invites.each { |id| @event.invites.find_or_initialize_by user_id: id }
   end
 end
