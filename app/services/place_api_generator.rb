@@ -3,18 +3,18 @@ class PlaceApiGenerator
     @city = params[:city]
   end
 
-  def upload_and_create
-    upload_data_list
+  def download_and_create
+    download_data
 
     create_if_not_exist
   end
 
-  def upload_and_create_list
-    Array.wrap upload_and_create
+  def download_and_create_to_list
+    Array.wrap download_and_create
   end
 
   private
-  def upload_data_list
+  def download_data
     return unless @city && @city.present?
 
     @data_list = JSON.parse(open("https://restcountries.eu/rest/v2/capital/#{ @city }").read) rescue return

@@ -9,7 +9,7 @@ class Api::PlacesController < ApplicationController
   def collection
     @places = PlaceSearcher.search params.merge current_user: current_user
 
-    @places = PlaceApiGenerator.new(params).upload_and_create_list if @places.empty?
+    @places = PlaceApiGenerator.new(params).download_and_create_to_list if @places.empty?
 
     @places
   end
