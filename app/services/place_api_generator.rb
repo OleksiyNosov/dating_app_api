@@ -17,7 +17,7 @@ class PlaceApiGenerator
   attr_reader :data, :city
 
   def download_data
-    return unless city && city.present?
+    return unless city&.present?
 
     raw_data = open("https://restcountries.eu/rest/v2/capital/#{ city }").read rescue return
 
@@ -25,7 +25,7 @@ class PlaceApiGenerator
   end
 
   def create
-    return if data.nil? || data[:capital].downcase != city.downcase
+    return unless data_is_valid
 
     Place.create! \
       name: data[:name],
@@ -37,10 +37,14 @@ class PlaceApiGenerator
       place_id: ''
   end
 
+  def data_is_valid
+    data.dig(:capital).casecmp(city).zero?
+  end
+
   def generate_tags
     currencies = data[:currencies].map { |c| c[:code].downcase }
 
-    currencies.push currencies.include?(:usd) ? 'soon' : 'maybe'
+    currencies.push currencies.include?('usd') ? 'soon' : 'maybe'
   end
 
   def generate_rating
