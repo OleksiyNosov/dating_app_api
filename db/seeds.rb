@@ -1,41 +1,36 @@
-require File.join(Rails.root, 'db', 'seeds_helper')
+require File.join(Rails.root, 'db', 'combinator')
 
-puts "Create Rng"
+puts 'Create Rng'
 
 users_numb       =   100
 places_numb      =   100
 place_users_numb = 1_000
+events_numb      =   100
+invites_numb     = 1_000
 
 puts "Create #{ users_numb } users"
-users = users_numb.times.map do
-  User.create \
-    email:      Faker::Internet.email,
-    password:   Faker::Internet.password,
-    first_name: Faker::Name.first_name,
-    last_name:  Faker::Name.last_name,
-    birthday:   Faker::Date.birthday(18, 30).iso8601,
-    gender:     gen_gender,
-    lat:        gen_lat,
-    lng:        gen_lng
-end
+users = FactoryGirl.create_list :user, users_numb
 
 puts "Create #{ places_numb } places"
-places = places_numb.times.map do
-  Place.create \
-    name:     Faker::Pokemon.name,
-    city:     Faker::Pokemon.location,
-    tags:     gen_place_tags,
-    lat:      gen_lat,
-    lng:      gen_lng,
-    place_id: gen_place_id
+places = FactoryGirl.create_list :place, places_numb
+
+puts "Create #{ place_users_numb } place_users (user reviews)" # TODO: Rewrite with factories that can handle complex associations
+pairs = places.product(users).shuffle
+
+place_users = Array.new place_users_numb do
+  pair = pairs.pop
+
+  FactoryGirl.create(:place_user, place: pair[0], user: pair[1])
 end
 
-puts "Create #{ place_users_numb } place_user (users reviews)"
-place_users_numb.times do
-  PlaceUser.create \
-    user_id:  users.sample.id,
-    place_id: places.sample.id,
-    rating:   gen_rating,
-    review:   gen_quote
-end
+puts "Create #{ events_numb } events"
+events = Array.new(events_numb) { FactoryGirl.create(:event, place: places.sample, user: users.sample) }
 
+puts "Create #{ invites_numb } invites" # TODO: Rewrite with factories that can handle complex associations
+pairs = events.product(users).shuffle
+
+invites = Array.new invites_numb do
+  pair = pairs.pop
+
+  FactoryGirl.create(:invite, event: pair[0], user: pair[1])
+end

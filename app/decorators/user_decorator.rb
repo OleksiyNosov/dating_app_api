@@ -5,14 +5,11 @@ class UserDecorator < ApplicationDecorator
   decorates_association :place_users
 
   def full_name
-    "#{ first_name } #{ last_name }"  
+    "#{ first_name } #{ last_name }"
   end
 
   def age
-    years  = Time.zone.now.year - birthday.year
-    y_days = Time.zone.now.yday - birthday.yday
-    
-    y_days < 0 ? years - 1 : years
+    TimeCalculator.years_ago birthday
   end
 
   def coords
@@ -31,21 +28,21 @@ class UserDecorator < ApplicationDecorator
   def _only
     return [] if context[:user_user_ratings]
 
-    result = %I[id gender]
+    result = %i[id gender]
 
-    result += %I[email birthday] if context[:full]
+    result += %i[email birthday] if context[:full]
 
     result
   end
 
   def _methods
-    return %I[collection] if context[:user_user_ratings]
+    return %i[collection] if context[:user_user_ratings]
 
-    result = %I[full_name avatar]
+    result = %i[full_name avatar]
 
-    result += %I[coords] if context[:full]
+    result += %i[coords] if context[:full]
 
-    result += %I[age] if context[:short]
+    result += %i[age] if context[:short]
 
     result
   end

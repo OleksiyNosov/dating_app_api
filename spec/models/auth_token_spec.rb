@@ -1,13 +1,13 @@
 require 'rails_helper'
 
 RSpec.describe AuthToken, type: :model do
-  it { should be_an ApplicationRecord }
+  it { is_expected.to be_an ApplicationRecord }
 
-  it { should belong_to(:user) }
+  it { is_expected.to belong_to(:user) }
 
-  it { should validate_presence_of :value }
+  it { is_expected.to validate_presence_of :value }
 
-  it { should validate_uniqueness_of :value }
+  it { is_expected.to validate_uniqueness_of :value }
 
   describe '#expired?' do
     let(:time_now) { Time.new 2010, 10, 10 }
@@ -26,7 +26,7 @@ RSpec.describe AuthToken, type: :model do
 
       before { expect(subject).to receive(:expired_at).and_return time_expired_at }
 
-      its(:expired?) { should eq true }
+      its(:expired?) { is_expected.to eq true }
     end
 
     context 'not expired' do
@@ -34,7 +34,7 @@ RSpec.describe AuthToken, type: :model do
 
       before { expect(subject).to receive(:expired_at).and_return time_expired_at }
 
-      its(:expired?) { should eq false }
+      its(:expired?) { is_expected.to eq false }
     end
   end
 end

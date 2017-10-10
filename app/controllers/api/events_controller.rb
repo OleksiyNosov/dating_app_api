@@ -1,5 +1,5 @@
 class Api::EventsController < ApplicationController
-  before_action :validate_author, only: [:update, :delete]
+  before_action :validate_author, only: [:update, :destroy]
   before_action :add_new_invites, only: [:update]
   before_action -> { set_decorator_context(full: true) }, only: [:show, :create, :update]
   before_action -> { set_decorator_context(short: true) }, only: [:index]
@@ -14,9 +14,7 @@ class Api::EventsController < ApplicationController
   end
 
   def build_resource
-    @event = Event.new resource_params.merge user_id: current_user.id
-
-    add_new_invites
+    @event = EventBuilder.new(resource_params, current_user, params[:event][:invites]).build_event
   end
 
   def resource_params
@@ -24,10 +22,10 @@ class Api::EventsController < ApplicationController
   end
 
   def validate_author
-    head :forbidden if resource.user != current_user   
-  end
+    return true if resource.user == current_user
 
-  def add_new_invites
-    params[:event][:invites].uniq.map(&:to_i).each { |id| resource.new_invite_if_not_exist User.find id }
+    resource.errors.add :user, 'have no rights to update or delete that event' 
+
+    raise ActiveRecord::RecordInvalid
   end
 end

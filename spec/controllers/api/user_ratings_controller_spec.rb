@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::UserRatingsController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#index' do
     context 'parent is place' do
@@ -11,7 +11,7 @@ RSpec.describe Api::UserRatingsController, type: :controller do
 
       before { process :index, method: :get, params: params, format: :json }
 
-      it { should render_template :index }
+      it { is_expected.to render_template :index }
     end
 
     context 'parent is user' do
@@ -21,14 +21,14 @@ RSpec.describe Api::UserRatingsController, type: :controller do
 
       before { process :index, method: :get, params: params, format: :json }
 
-      it { should render_template :index }
+      it { is_expected.to render_template :index }
     end
   end
 
   describe '#collection' do
     before { expect(subject).to receive(:parent).and_return(:collection) }
 
-    its(:collection) { should eq :collection }
+    its(:collection) { is_expected.to eq :collection }
   end
 
   describe '#parent' do
@@ -57,7 +57,7 @@ RSpec.describe Api::UserRatingsController, type: :controller do
 
       before { expect(Place).to receive(:find).with(parent_id).and_return place }
 
-      its(:parent) { should eq place }
+      its(:parent) { is_expected.to eq place }
     end
 
     context 'parent is user' do
@@ -85,7 +85,7 @@ RSpec.describe Api::UserRatingsController, type: :controller do
 
       before { expect(User).to receive(:find).with(parent_id).and_return user }
 
-      its(:parent) { should eq user }
+      its(:parent) { is_expected.to eq user }
     end
   end
 end

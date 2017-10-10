@@ -16,6 +16,7 @@ gem 'paperclip'
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'factory_girl_rails'
   gem 'faker'
 end
 
@@ -26,6 +27,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'shoulda-callback-matchers'
   gem 'simplecov', require: false
+  gem 'rubocop', require: false
 end
 
 group :development do

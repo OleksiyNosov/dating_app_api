@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::PlaceUsersController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#show' do
     let(:params) { { place_user: { }, id: '2', place_id: '3' } }
@@ -10,7 +10,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     before { process :show, method: :get, params: params, format: :json }
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe '#create' do
@@ -43,7 +43,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     before { process :create, method: :post, params: params, format: :json }
 
-    it { should render_template :create }
+    it { is_expected.to render_template :create }
   end
 
   describe '#update' do
@@ -74,7 +74,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     before { process :update, method: :patch, params: params, format: :json }
 
-    it { should render_template :update }
+    it { is_expected.to render_template :update }
   end
 
   describe '#resource' do
@@ -97,7 +97,7 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
       end
     end
 
-    its(:resource) { should eq place_user }
+    its(:resource) { is_expected.to eq place_user }
   end
 
   describe '#parent' do
@@ -116,6 +116,6 @@ RSpec.describe Api::PlaceUsersController, type: :controller do
 
     before { expect(Place).to receive(:find).with(params).and_return(parent) }
 
-    its(:parent) { should eq parent }
+    its(:parent) { is_expected.to eq parent }
   end
 end

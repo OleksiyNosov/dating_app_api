@@ -1,24 +1,28 @@
-# README
+[![Code Climate](https://codeclimate.com/github/OleksiyNosov/dating_app_api/badges/gpa.svg)](https://codeclimate.com/github/OleksiyNosov/dating_app_api)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# Dating App Api
+It's main idea to provide easy and reliable api for social app with following:
 
-Things you may want to cover:
+#### Basics
+- Users
+- Places
 
-* Ruby version
+#### Features
+- Geolocation of users in respect to places
+- Events with different modifiers
+- Friendship (not implemented yet)
+- Messaging (not implemented yet)
 
-* System dependencies
+# Requirements
+- Ruby 2.4.1
+- Rails 5.1.3
+- PostgreSQL 9.5.8
 
-* Configuration
+# Setup
 
-* Database creation
+```sh
+$ rails db:setup
+```
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Configuration
+Create and setup config/database.yml

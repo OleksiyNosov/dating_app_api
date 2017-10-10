@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::SessionsController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#create' do
     let(:session_params) { { email: 'test@test.com', password: 'qwerty' } }
@@ -16,7 +16,7 @@ RSpec.describe Api::SessionsController, type: :controller do
 
     before { process :create, method: :post, params: params, format: :json }
 
-    it { should render_template :create }
+    it { is_expected.to render_template :create }
   end
 
   describe '#destroy' do
@@ -30,6 +30,6 @@ RSpec.describe Api::SessionsController, type: :controller do
 
     before { process :destroy, method: :delete, format: :json }
 
-    it { should respond_with :no_content }
+    it { is_expected.to respond_with :no_content }
   end
 end

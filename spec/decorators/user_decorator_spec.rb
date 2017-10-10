@@ -5,16 +5,42 @@ RSpec.describe UserDecorator do
 
   subject { user.decorate }
 
-  describe '#full_name' do its(:full_name) { should eq "John Smith" } end
+  describe '#full_name' do its(:full_name) { is_expected.to eq "John Smith" } end
 
-  describe '#coords' do its(:coords) { should eq lat: 28.3, lng: 48.5 } end
+  describe '#coords' do its(:coords) { is_expected.to eq lat: 28.3, lng: 48.5 } end
 
   describe '#age' do
 
   end
 
   describe '#avatar' do 
-    xit(:avatar) { should eq original_url: 'original_url', thumb_url: 'thumb_url' } 
+    before do 
+      #
+      # => object.avatar.url
+      #
+      expect(subject).to receive(:object) do
+        double.tap do |a|
+          expect(a).to receive(:avatar) do
+            double.tap { |b| expect(b).to receive(:url).and_return 'original_url' }
+          end
+        end
+      end 
+    end
+
+    before do
+      #
+      # => object.avatar.url
+      # 
+      expect(subject).to receive(:object) do
+        double.tap do |a|
+          expect(a).to receive(:avatar) do
+            double.tap { |b| expect(b).to receive(:url).with(:thumb).and_return 'thumb_url' }
+          end
+        end
+      end 
+    end
+
+    its(:avatar) { is_expected.to eq original_url: 'original_url', thumb_url: 'thumb_url' } 
   end
 
   describe '#collection' do
@@ -31,7 +57,7 @@ RSpec.describe UserDecorator do
       expect(PlaceUserDecorator).to receive(:decorate_collection).with(place_users, context).and_return :collection 
     end
 
-    its(:collection) { should eq :collection }
+    its(:collection) { is_expected.to eq :collection }
   end
 
   describe '#as_json' do
@@ -57,7 +83,7 @@ RSpec.describe UserDecorator do
       before { expect(subject).to receive(:avatar).and_return(avatar) }
 
       its('as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 2,
         gender: 'male',
         full_name: full_name,
@@ -81,7 +107,7 @@ RSpec.describe UserDecorator do
       before { expect(subject).to receive(:coords).and_return(coords) }
 
       its('as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 2,
         gender: 'male',
         email: 'test@test.com',
@@ -108,7 +134,7 @@ RSpec.describe UserDecorator do
       before { expect(subject).to receive(:age).and_return(age) }
 
       its('as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 2,
         gender: 'male',
         full_name: full_name,
@@ -126,7 +152,7 @@ RSpec.describe UserDecorator do
 
       before { expect(subject).to receive(:collection).and_return(collection) }
 
-      its('as_json.symbolize_keys') { should eq result }
+      its('as_json.symbolize_keys') { is_expected.to eq result }
     end
   end
 end

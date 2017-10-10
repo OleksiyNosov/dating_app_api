@@ -1,21 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
-  it { should be_an ApplicationRecord }
+  it { is_expected.to be_an ApplicationRecord }
 
-  it { should belong_to :place }
+  it { is_expected.to belong_to :place }
 
-  it { should belong_to :user }
+  it { is_expected.to belong_to :user }
 
-  it { should have_many :invites }
+  it { is_expected.to have_many :invites }
 
-  it { should validate_presence_of :place }
+  it { is_expected.to validate_presence_of :place }
   
-  it { should validate_presence_of :user }
+  it { is_expected.to validate_presence_of :user }
   
-  it { should validate_presence_of :title }
+  it { is_expected.to validate_presence_of :title }
 
-  it { should define_enum_for(:kind).with([:public_event, :private_event, :friends_only]) }
+  it { is_expected.to define_enum_for(:kind).with([:public_event, :private_event, :friends_only]) }
 
   describe '#new_invite_if_not_exist' do
     let(:invited_user) { stub_model User }

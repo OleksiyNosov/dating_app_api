@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::AvatarsController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#create' do
     let(:params) { { avatar: 'avatar' } }
@@ -14,7 +14,7 @@ RSpec.describe Api::AvatarsController, type: :controller do
 
     before { process :create, method: :post, params: params }
 
-    it { should respond_with :ok }
+    it { is_expected.to respond_with :ok }
   end
 
   describe '#destroy' do
@@ -30,6 +30,6 @@ RSpec.describe Api::AvatarsController, type: :controller do
 
     before { process :destroy, method: :delete, params: params, format: :json }
 
-    it { should respond_with :no_content }
+    it { is_expected.to respond_with :no_content }
   end
 end

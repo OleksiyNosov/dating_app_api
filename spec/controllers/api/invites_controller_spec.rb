@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::InvitesController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#collection' do
     before do
@@ -13,6 +13,6 @@ RSpec.describe Api::InvitesController, type: :controller do
       end       
     end
 
-    its(:collection) { should eq :collection }
+    its(:collection) { is_expected.to eq :collection }
   end
 end

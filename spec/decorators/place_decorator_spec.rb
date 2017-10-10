@@ -29,7 +29,7 @@ RSpec.describe PlaceDecorator do
       end      
     end
 
-    its(:ratings) { should eq user: user, rating: 4 }
+    its(:ratings) { is_expected.to eq user: user, rating: 4 }
   end
 
   describe '#distance' do
@@ -63,7 +63,7 @@ RSpec.describe PlaceDecorator do
         end
       end
 
-      xit(:distance) { should eq 2500 }
+      xit(:distance) { is_expected.to eq 2500 }
     end
 
     context 'distance is not is query' do
@@ -76,7 +76,7 @@ RSpec.describe PlaceDecorator do
         end
       end
 
-      its(:distance) { should eq nil }
+      its(:distance) { is_expected.to eq nil }
     end
   end
 
@@ -85,7 +85,7 @@ RSpec.describe PlaceDecorator do
       subject { place.decorate }
 
       its('as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 3, 
         name: 'Mafia', 
         city: 'Vinnitsia',
@@ -100,7 +100,7 @@ RSpec.describe PlaceDecorator do
       subject { place.decorate(context: { place_user_ratings: true }) }
 
       its('as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 3, 
         name: 'Mafia', 
         city: 'Vinnitsia',
@@ -120,7 +120,7 @@ RSpec.describe PlaceDecorator do
       before { expect(subject).to receive(:distance).and_return(distance) }
 
       its('as_json.symbolize_keys') do
-        should eq \
+        is_expected.to eq \
         id: 3, 
         name: 'Mafia', 
         city: 'Vinnitsia',

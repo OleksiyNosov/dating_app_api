@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Api::EventsController, type: :controller do
-  it { should be_an ApplicationController }
+  it { is_expected.to be_an ApplicationController }
 
   describe '#index' do
     before { sign_in }
 
     before { process :index, method: :get, format: :json }
 
-    it { should render_template :index }
+    it { is_expected.to render_template :index }
   end
 
   describe '#show' do
@@ -18,34 +18,55 @@ RSpec.describe Api::EventsController, type: :controller do
 
     before { process :show, method: :get, params: params, format: :json }
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe '#create' do
+    let(:invites) { %w[15 20 30] }
+
     let(:event_params) { {
       place_id: '3', title: 'Party', description: 'Blackout 1 love',
-      kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300" 
+      kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
+      invites: invites
     } }
 
     let(:params) { { event: event_params } }
 
     let(:user) { stub_model User, id: '2' }
 
-    let(:merged_event_params) { event_params.merge(user_id: user.id) }
-
     let(:event) { stub_model Event }
 
     before { sign_in user }
 
-    before { expect(Event).to receive(:new).with(permit! merged_event_params).and_return event }
+    before { expect(subject).to receive(:resource_params).and_return event_params }
 
-    before { expect(subject).to receive(:add_new_invites) }
+    before do
+      #
+      # => params[:event][:invites]
+      #
+      expect(subject).to receive(:params) do
+        double.tap do |a|
+          expect(a).to receive(:[]).with(:event) do
+            double.tap { |b| expect(b).to receive(:[]).with(:invites).and_return invites }
+          end
+        end
+      end
+    end
+
+    before do
+      #
+      # => EventBuilder.new().build_event
+      #
+      expect(EventBuilder).to receive(:new).with(event_params, user, invites) do
+        double.tap { |a| expect(a).to receive(:build_event).and_return event }
+      end
+    end
 
     before { expect(event).to receive(:save!) }
 
     before { process :create, method: :post, params: params, format: :json }
 
-    it { should render_template :create }
+    it { is_expected.to render_template :create }
   end
 
   describe '#collection' do
@@ -54,7 +75,7 @@ RSpec.describe Api::EventsController, type: :controller do
     let(:params) { {
       place_id: '3', title: 'Party', description: 'Blackout 1 love',
       kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
-      current_user: user 
+      current_user: user
     } }
 
     before { sign_in user }
@@ -70,35 +91,6 @@ RSpec.describe Api::EventsController, type: :controller do
       end
     end
 
-    its(:collection) { should eq :collection }
-  end
-
-  describe '#add_new_invites' do
-    before do
-      #
-      # -> params[:event][:invites].uniq.map(&:to_i).each
-      #
-      expect(subject).to receive(:params) do
-        double.tap do |a|
-          expect(a).to receive(:[]).with(:event) do
-            double.tap do |b| 
-              expect(b).to receive(:[]).with(:invites) do
-                double.tap do |c| 
-                  expect(c).to receive(:uniq) do
-                    double.tap do |d| 
-                      expect(d).to receive(:map) do
-                        double.tap { |e| expect(e).to receive(:each).and_return :result }
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end  
-      end
-    end
-
-    its(:add_new_invites) { should eq :result }
+    its(:collection) { is_expected.to eq :collection }
   end
 end

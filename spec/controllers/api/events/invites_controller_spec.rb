@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Api::Events::InvitesController, type: :controller do
-  it { should be_an Api::InvitesController }
+  it { is_expected.to be_an Api::InvitesController }
 
   describe '#index' do
     let(:params) { { event_id: '5' } }
@@ -10,7 +10,7 @@ RSpec.describe Api::Events::InvitesController, type: :controller do
 
     before { process :index, method: :get, params: params, format: :json }
 
-    it { should render_template :index }
+    it { is_expected.to render_template :index }
   end
 
   describe '#show' do
@@ -20,7 +20,7 @@ RSpec.describe Api::Events::InvitesController, type: :controller do
 
     before { process :show, method: :get, params: params, format: :json }
 
-    it { should render_template :show }
+    it { is_expected.to render_template :show }
   end
 
   describe '#create' do
@@ -49,7 +49,7 @@ RSpec.describe Api::Events::InvitesController, type: :controller do
 
     before { process :create, method: :post, params: params, format: :json }
 
-    it { should render_template :create }
+    it { is_expected.to render_template :create }
   end
 
   describe '#parent' do
@@ -63,6 +63,6 @@ RSpec.describe Api::Events::InvitesController, type: :controller do
 
     before { expect(Event).to receive(:find).with('5').and_return(parent) }
 
-    its(:parent) { should eq parent }
+    its(:parent) { is_expected.to eq parent }
   end
 end
