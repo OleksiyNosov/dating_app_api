@@ -1,55 +1,24 @@
 class PlaceApiGenerator
-  def initialize params
-    @city = params[:city]
+  include PlaceCrawler
+
+  def initialize city
+    @city = city
   end
 
-  def download_and_create
-    download_data
+  def download_and_create_place
+    download_places_data
 
-    create
-  end
+    find_valid_place_data
 
-  def download_and_create_as_list
-    Array.wrap download_and_create
+    create_place if @place_data
   end
 
   private
-  attr_reader :data, :city
-
-  def download_data
-    return unless city&.present?
-
-    raw_data = open("https://restcountries.eu/rest/v2/capital/#{ city }").read rescue return
-
-    @data = JSON.parse(raw_data, symbolize_names: true).first
+  def find_valid_place_data
+    @place_data = @places_data.detect { |place_data| place_data.data[:capital] == @city }
   end
 
-  def create
-    return unless data_is_valid
-
-    Place.create! \
-      name: data[:name],
-      city: data[:capital],
-      tags: generate_tags,
-      lat: data[:latlng][0],
-      lng: data[:latlng][1],
-      overall_rating: generate_rating,
-      place_id: ''
-  end
-
-  def data_is_valid
-    data.dig(:capital).casecmp(city).zero?
-  end
-
-  def generate_tags
-    currencies = data[:currencies].map { |c| c[:code].downcase }
-
-    currencies.push currencies.include?('usd') ? 'soon' : 'maybe'
-  end
-
-  def generate_rating
-    return 5 if data[:currencies].any? { |c| c[:code] == 'USD' }
-
-    rand 1..4
+  def create_place
+    Place.create! @place_data.decorate(context: { restcountries_capital: true }).attributes
   end
 end
