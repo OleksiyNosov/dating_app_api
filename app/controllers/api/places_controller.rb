@@ -8,14 +8,16 @@ class Api::PlacesController < ApplicationController
 
   def collection
     @places = PlaceSearcher.search params.merge current_user: current_user
-
-    @places = PlaceApiGenerator.new(params).download_and_create_as_list if @places.empty?
-
-    @places
   end
 
   def resource
-    @place ||= Place.find params[:id]
+    return @place if @place
+
+    return @place = Place.find(params[:id]) unless params[:id].to_i.zero?
+
+    @place = Place.find_by(city: params[:id])
+
+    @place ||= PlaceApiGenerator.new(params[:id]).download_and_create_place
   end
 
   def resource_params
