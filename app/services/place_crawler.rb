@@ -2,16 +2,21 @@ module PlaceCrawler
   URL = 'https://restcountries.eu/rest/v2/capital/'
 
   class << self
-    def download_data city
+    def places_data city
+      @places_data ||= create_places_data city
+    end
+
+    private
+    def download_raw_places city
       open("#{ URL }#{ city }").read
     end
 
-    def download_and_parse_data city
-      JSON.parse(download_data(city), symbolize_names: true)
+    def parse_raw_places city
+      JSON.parse(download_raw_places(city), symbolize_names: true)
     end
 
-    def download_places_data city
-      download_and_parse_data(city).map { |data| PlaceData.new data }
+    def create_places_data city
+      parse_raw_places(city).map { |data| PlaceData.new data }
     end
   end
 end
