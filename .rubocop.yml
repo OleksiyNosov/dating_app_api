@@ -16,5 +16,8 @@ Style/FrozenStringLiteralComment:
 Style/MethodDefParentheses:
   Enabled: false
 
+Style/MutableConstant:
+  Enabled: false
+
 Metrics/LineLength:
   Max: 120
