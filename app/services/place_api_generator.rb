@@ -1,14 +1,12 @@
 class PlaceApiGenerator
-  include PlaceCrawler
-
   def initialize city
     @city = city
   end
 
   def download_and_create_place
-    download_places_data
+    @places_data = PlaceCrawler.download_places_data @city
 
-    find_valid_place_data
+    find_valid_place_data if @places_data
 
     create_place if @place_data
   end
