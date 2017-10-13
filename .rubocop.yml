@@ -19,5 +19,13 @@ Style/MethodDefParentheses:
 Style/MutableConstant:
   Enabled: false
 
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    '%i': '[]'
+    '%I': '[]'
+    '%r': '{}'
+    '%w': '[]'
+    '%W': '[]'
+
 Metrics/LineLength:
   Max: 120
