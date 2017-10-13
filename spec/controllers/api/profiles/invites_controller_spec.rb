@@ -24,7 +24,7 @@ RSpec.describe Api::Profiles::InvitesController, type: :controller do
   describe '#update' do
     let(:invite_params) { { respond: 'attend' } }
 
-    let(:params) { { invite: invite_params, id: '7' } } 
+    let(:params) { { invite: invite_params, id: '7' } }
 
     let(:invite) { stub_model Invite }
 
@@ -44,7 +44,7 @@ RSpec.describe Api::Profiles::InvitesController, type: :controller do
     before { process :update, method: :patch, params: params, format: :json }
 
     it { is_expected.to render_template :update }
-  end  
+  end
 
   describe '#parent' do
     let(:parent) { stub_model User }

@@ -1,7 +1,7 @@
 class ApplicationSearcher
   include SimpleMathOperations
 
-  def initialize params={}
+  def initialize params = {}
     @params = params
   end
 
@@ -25,7 +25,7 @@ class ApplicationSearcher
   end
 
   class << self
-    def search params={}
+    def search params = {}
       new(params).search
     end
   end

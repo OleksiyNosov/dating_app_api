@@ -5,7 +5,7 @@ class Api::PlaceUsersController < ApplicationController
   end
 
   def resource
-    @place_user ||= parent.place_users.find_by user: current_user 
+    @place_user ||= parent.place_users.find_by user: current_user
   end
 
   def resource_params

@@ -25,7 +25,7 @@ class PlaceDecorator < ApplicationDecorator
 
     return result if context[:short]
 
-    result += %i[tags] 
+    result + %i[tags]
   end
 
   def _methods

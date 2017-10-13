@@ -2,17 +2,17 @@ class PlaceDataDecorator < Draper::Decorator
   delegate_all
 
   def attributes
-    if context[:restcountries_capital]
-      {
-        name: data[:name],
-        city: data[:capital],
-        tags: generate_tags,
-        lat: data[:latlng][0],
-        lng: data[:latlng][1],
-        overall_rating: generate_rating,
-        place_id: ''
-      }
-    end 
+    return unless context[:restcountries_capital]
+
+    {
+      name: data[:name],
+      city: data[:capital],
+      tags: generate_tags,
+      lat: data[:latlng][0],
+      lng: data[:latlng][1],
+      overall_rating: generate_rating,
+      place_id: ''
+    }
   end
 
   private

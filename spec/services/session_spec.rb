@@ -48,7 +48,7 @@ RSpec.describe Session do
       # => user.auth_token.destroy_all
       #
       expect(subject).to receive(:user) do
-        double.tap do |a| 
+        double.tap do |a|
           expect(a).to receive(:auth_tokens) do
             double.tap { |b| expect(b).to receive(:destroy_all) }
           end
@@ -60,39 +60,21 @@ RSpec.describe Session do
   end
 
   describe '#auth_token' do
-    context 'user exist' do
-      let(:auth_token) { stub_model AuthToken }
+    let(:auth_token) { stub_model AuthToken }
 
-      before { expect(subject).to receive(:user).and_return true }
-
-      before do
-        #
-        # => user.auth_tokens.last
-        #
-        expect(subject).to receive(:user) do
-          double.tap do |a|
-            expect(a).to receive(:auth_tokens) do
-              double.tap { |b| expect(b).to receive(:last).and_return auth_token }
-            end 
+    before do
+      #
+      # => user.auth_tokens.last
+      #
+      expect(subject).to receive(:user) do
+        double.tap do |a|
+          expect(a).to receive(:auth_tokens) do
+            double.tap { |b| expect(b).to receive(:last).and_return auth_token }
           end
         end
       end
-
-      its(:auth_token) { is_expected.to eq auth_token }
     end
 
-    context 'user not exist' do
-      before { expect(subject).to receive(:user).and_return false }
-
-      its(:auth_token) { is_expected.to eq nil }
-    end
-  end
-
-  describe '#user' do
-    let(:user) { stub_model User }
-
-    before { expect(User).to receive(:find_by).with(email: 'test@test.com').and_return user }
-
-    its(:user) { is_expected.to eq user }
+    its(:auth_token) { is_expected.to eq auth_token }
   end
 end

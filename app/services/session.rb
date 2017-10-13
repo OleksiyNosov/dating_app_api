@@ -4,7 +4,7 @@ class Session
 
   attr_reader :email, :password
 
-  def initialize params={}
+  def initialize params = {}
     @user     = params[:user]
     @email    = params[:email]
     @password = params[:password]
@@ -12,7 +12,7 @@ class Session
 
   validate do |model|
     model.errors.add :email, 'not found' unless user
-    model.errors.add :password, 'is invalid' unless user&.authenticate password    
+    model.errors.add :password, 'is invalid' unless user&.authenticate password
   end
 
   def save!
@@ -26,7 +26,7 @@ class Session
   end
 
   def auth_token
-    user.auth_tokens.last if user
+    user&.auth_tokens&.last
   end
 
   def user

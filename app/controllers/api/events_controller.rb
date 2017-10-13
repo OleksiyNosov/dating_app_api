@@ -1,8 +1,8 @@
 class Api::EventsController < ApplicationController
-  before_action :validate_author, only: [:update, :destroy]
+  before_action :validate_author, only: %i[update destroy]
   before_action :add_new_invites, only: [:update]
-  before_action -> { set_decorator_context(full: true) }, only: [:show, :create, :update]
-  before_action -> { set_decorator_context(short: true) }, only: [:index]
+  before_action -> { add_decorator_context(full: true) }, only: %i[show create update]
+  before_action -> { add_decorator_context(short: true) }, only: [:index]
 
   private
   def collection
@@ -24,7 +24,7 @@ class Api::EventsController < ApplicationController
   def validate_author
     return true if resource.user == current_user
 
-    resource.errors.add :user, 'have no rights to update or delete that event' 
+    resource.errors.add :user, 'have no rights to update or delete that event'
 
     raise ActiveRecord::RecordInvalid
   end

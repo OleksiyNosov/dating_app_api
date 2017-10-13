@@ -9,7 +9,7 @@ RSpec.describe Api::ProfilesController, type: :controller do
     before { sign_in user }
 
     its(:resource) { is_expected.to eq user }
-    
+
     before { process :show, method: :get, format: :json }
 
     it { is_expected.to render_template :show }

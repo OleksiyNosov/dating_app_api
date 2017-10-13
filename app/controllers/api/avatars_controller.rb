@@ -12,7 +12,7 @@ class Api::AvatarsController < ApplicationController
 
     head :no_content
   end
-  
+
   private
   def resource
     @user ||= current_user

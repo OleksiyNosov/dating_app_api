@@ -32,7 +32,7 @@ RSpec.describe Api::UsersController, type: :controller do
 
     let(:user) { stub_model User }
 
-    before do 
+    before do
       #
       # params[:id] -> 1
       #
@@ -40,7 +40,7 @@ RSpec.describe Api::UsersController, type: :controller do
         double.tap { |a| expect(a).to receive(:[]).with(:id).and_return(params) }
       end
     end
-    
+
     before { expect(User).to receive(:find).with(params).and_return(user) }
 
     its(:resource) { is_expected.to eq user }

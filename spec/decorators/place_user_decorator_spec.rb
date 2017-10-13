@@ -15,8 +15,8 @@ RSpec.describe PlaceUserDecorator do
 
       its('as_json.symbolize_keys') do
         is_expected.to eq \
-        rating: 4,
-        place:  place_user.place
+          rating: 4,
+          place:  place_user.place
       end
     end
   end

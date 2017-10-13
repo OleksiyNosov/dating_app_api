@@ -16,7 +16,7 @@ class EventSearcher < ApplicationSearcher
     @results = @results
       .joins(:place)
       .select("events.*, earth_distance(ll_to_earth(#{ user.lat }, #{ user.lng }), ll_to_earth(places.lat, places.lng)) AS distance")
-      .where("earth_box(ll_to_earth(?, ?), ?) @> ll_to_earth(places.lat, places.lng)", user.lat, user.lng, km_to_m(range.to_f))
+      .where('earth_box(ll_to_earth(?, ?), ?) @> ll_to_earth(places.lat, places.lng)', user.lat, user.lng, km_to_m(range.to_f))
       .order('distance')
   end
 

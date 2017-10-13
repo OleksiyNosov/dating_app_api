@@ -12,15 +12,15 @@ RSpec.describe AuthToken, type: :model do
   describe '#expired?' do
     let(:time_now) { Time.new 2010, 10, 10 }
 
-    before do 
+    before do
       #
       # => Time.zone.now
       #
       expect(Time).to receive(:zone) do
         double.tap { |a| expect(a).to receive(:now).and_return time_now }
-      end 
+      end
     end
-    
+
     context 'expired' do
       let(:time_expired_at) { Time.new 2010, 10, 9 }
 

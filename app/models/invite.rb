@@ -1,5 +1,5 @@
 class Invite < ApplicationRecord
-  enum respond: [:no_respond, :attend, :not_attend]
+  enum respond: %i[no_respond attend not_attend]
 
   belongs_to :event
   belongs_to :user
