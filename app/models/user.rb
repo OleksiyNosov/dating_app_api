@@ -1,8 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
-  enum gender: [:male, :female]
-  
+  enum gender: %i[male female]
+
   has_many :auth_tokens, dependent: :destroy
   has_many :place_users
   has_many :places, through: :place_users
@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   validates :email, presence: true, uniqueness: { case_sensitive: false }, email: true
 
-  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/ 
+  validates_attachment_content_type :avatar, content_type: %r{\Aimage\/.*\z}
 
   after_commit :create_auth_token, on: :create
 

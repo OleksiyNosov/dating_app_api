@@ -1,6 +1,6 @@
 module SimpleMathOperations
   include ActiveSupport::Concern
-  
+
   def km_to_m km
     km * 1000.0
   end

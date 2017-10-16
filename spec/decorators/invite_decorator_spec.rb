@@ -13,9 +13,9 @@ RSpec.describe InviteDecorator do
 
       its(:'as_json.symbolize_keys') do
         is_expected.to eq \
-        id: 7,
-        respond: 'attend',
-        user: user
+          id: 7,
+          respond: 'attend',
+          user: user
       end
     end
 
@@ -28,9 +28,9 @@ RSpec.describe InviteDecorator do
 
       its(:'as_json.symbolize_keys') do
         is_expected.to eq \
-        id: 7,
-        respond: 'attend',
-        event: event
+          id: 7,
+          respond: 'attend',
+          event: event
       end
     end
   end

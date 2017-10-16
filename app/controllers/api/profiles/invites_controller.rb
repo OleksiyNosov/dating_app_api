@@ -1,5 +1,5 @@
-class Api::Profiles::InvitesController < Api::InvitesController 
-  before_action -> { set_decorator_context(with_event: true) }, only: [:index, :show, :update]
+class Api::Profiles::InvitesController < Api::InvitesController
+  before_action -> { add_decorator_context(with_event: true) }, only: %i[index show update]
 
   private
   def resource_params

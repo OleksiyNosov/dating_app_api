@@ -1,5 +1,5 @@
 class Api::PlacesController < ApplicationController
-  before_action -> { set_decorator_context with_distance: true }, only: :index
+  before_action -> { add_decorator_context with_distance: true }, only: :index
 
   private
   def build_resource
@@ -11,7 +11,13 @@ class Api::PlacesController < ApplicationController
   end
 
   def resource
-    @place ||= Place.find params[:id]
+    return @place if @place
+
+    return @place = Place.find(params[:id]) unless params[:id].to_i.zero?
+
+    @place = Place.find_by(city: params[:id])
+
+    @place ||= PlaceApiGenerator.new(params[:id]).download_and_create_place
   end
 
   def resource_params

@@ -40,7 +40,7 @@ RSpec.describe Api::Events::InvitesController, type: :controller do
         double.tap do |a|
           expect(a).to receive(:invites) do
             double.tap { |b| expect(b).to receive(:build).with(permit! invite_params).and_return invite }
-          end 
+          end
         end
       end
     end

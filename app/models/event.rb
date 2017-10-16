@@ -1,5 +1,5 @@
 class Event < ApplicationRecord
-  enum kind: [:public_event, :private_event, :friends_only]
+  enum kind: %i[public_event private_event friends_only]
 
   belongs_to :place
   belongs_to :user

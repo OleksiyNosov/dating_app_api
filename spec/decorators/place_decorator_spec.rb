@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe PlaceDecorator do
-  let(:place) do 
-    stub_model Place, 
-    id: 3, 
-    name: 'Mafia', 
-    city: 'Vinnitsia',
-    place_id: '', 
-    tags: ['beer', 'pizza'], 
-    overall_rating: 4.6,
-    lat: 136.5,
-    lng: 30.9
+  let(:place) do
+    stub_model Place,
+               id: 3,
+               name: 'Mafia',
+               city: 'Vinnitsia',
+               place_id: '',
+               tags: %w[beer pizza],
+               overall_rating: 4.6,
+               lat: 136.5,
+               lng: 30.9
   end
 
   describe '#ratings' do
@@ -26,7 +26,7 @@ RSpec.describe PlaceDecorator do
       #
       expect(subject).to receive(:place_users) do
         double.tap { |a| expect(a).to receive(:map).and_return ratings }
-      end      
+      end
     end
 
     its(:ratings) { is_expected.to eq user: user, rating: 4 }
@@ -51,7 +51,7 @@ RSpec.describe PlaceDecorator do
         #
         expect(subject).to receive(:object) do
           double.tap { |a| expect(a).to receive(:distance).and_return 2.5 }
-        end 
+        end
       end
 
       before do
@@ -86,13 +86,13 @@ RSpec.describe PlaceDecorator do
 
       its('as_json.symbolize_keys') do
         is_expected.to eq \
-        id: 3, 
-        name: 'Mafia', 
-        city: 'Vinnitsia',
-        place_id: '', 
-        tags: ['beer', 'pizza'], 
-        overall_rating: 4.6,
-        coords: { lat: 136.5, lng: 30.9 }
+          id: 3,
+          name: 'Mafia',
+          city: 'Vinnitsia',
+          place_id: '',
+          tags: %w[beer pizza],
+          overall_rating: 4.6,
+          coords: { lat: 136.5, lng: 30.9 }
       end
     end
 
@@ -101,14 +101,14 @@ RSpec.describe PlaceDecorator do
 
       its('as_json.symbolize_keys') do
         is_expected.to eq \
-        id: 3, 
-        name: 'Mafia', 
-        city: 'Vinnitsia',
-        place_id: '', 
-        tags: ['beer', 'pizza'], 
-        overall_rating: 4.6,
-        coords: { lat: 136.5, lng: 30.9 },
-        ratings: []
+          id: 3,
+          name: 'Mafia',
+          city: 'Vinnitsia',
+          place_id: '',
+          tags: %w[beer pizza],
+          overall_rating: 4.6,
+          coords: { lat: 136.5, lng: 30.9 },
+          ratings: []
       end
     end
 
@@ -121,14 +121,14 @@ RSpec.describe PlaceDecorator do
 
       its('as_json.symbolize_keys') do
         is_expected.to eq \
-        id: 3, 
-        name: 'Mafia', 
-        city: 'Vinnitsia',
-        place_id: '', 
-        tags: ['beer', 'pizza'], 
-        overall_rating: 4.6,
-        coords: { lat: 136.5, lng: 30.9 },
-        distance: distance
+          id: 3,
+          name: 'Mafia',
+          city: 'Vinnitsia',
+          place_id: '',
+          tags: %w[beer pizza],
+          overall_rating: 4.6,
+          coords: { lat: 136.5, lng: 30.9 },
+          distance: distance
       end
     end
   end

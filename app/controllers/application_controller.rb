@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   skip_before_action :verify_authenticity_token, if: :json_request?
 
-  before_action :authenticate, :set_decorator_context
+  before_action :authenticate, :add_decorator_context
 
   attr_reader :current_user
 
@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
   private
   def authenticate
-    authenticate_or_request_with_http_token do |token, options|
+    authenticate_or_request_with_http_token do |token, _options|
       auth_token = AuthToken.find_by value: token
 
       if auth_token&.expired?
@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
     request.format.json?
   end
 
-  def set_decorator_context context_values={}
+  def add_decorator_context context_values = {}
     @decorator_context = { context: context_values }
   end
 end

@@ -7,10 +7,10 @@ RSpec.describe Api::InvitesController, type: :controller do
     before do
       #
       # -> parent.invites
-      # 
+      #
       expect(subject).to receive(:parent) do
         double.tap { |a| expect(a).to receive(:invites).and_return(:collection) }
-      end       
+      end
     end
 
     its(:collection) { is_expected.to eq :collection }

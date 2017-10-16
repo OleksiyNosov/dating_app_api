@@ -3,5 +3,5 @@ module Permitter
     ActionController::Parameters.new(params).permit!
   end
 
-  alias :permit! :permit
+  alias permit! permit
 end

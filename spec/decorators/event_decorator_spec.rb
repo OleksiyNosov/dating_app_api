@@ -3,13 +3,13 @@ require 'rails_helper'
 RSpec.describe EventDecorator do
   let(:event) do
     stub_model Event,
-    id: 5,
-    user_id: 2,
-    place_id: 3,
-    title: 'Party',
-    description: 'Blackout 1 love',
-    kind: 'public_event',
-    start_time: Time.new(2017, 9, 30, 23, 36)
+               id: 5,
+               user_id: 2,
+               place_id: 3,
+               title: 'Party',
+               description: 'Blackout 1 love',
+               kind: 'public_event',
+               start_time: Time.new(2017, 9, 30, 23, 36)
   end
 
   subject { event.decorate }
@@ -113,13 +113,13 @@ RSpec.describe EventDecorator do
 
       its(:'as_json.symbolize_keys') do
         is_expected.to eq \
-        id: 5,
-        kind: 'public_event',
-        title: 'Party',
-        description: 'Blackout 1 love',
-        place: place,
-        date: '2017-9-30',
-        time: '23:36'
+          id: 5,
+          kind: 'public_event',
+          title: 'Party',
+          description: 'Blackout 1 love',
+          place: place,
+          date: '2017-9-30',
+          time: '23:36'
       end
     end
 
@@ -146,17 +146,17 @@ RSpec.describe EventDecorator do
 
       its(:'as_json.symbolize_keys') do
         is_expected.to eq \
-        id: 5,
-        kind: 'public_event',
-        title: 'Party',
-        description: 'Blackout 1 love',
-        place: place,
-        date: '2017-9-30',
-        time: '23:36',
-        author: author,
-        people_attend_count: 4,
-        people_attend: :people_attend,
-        invites: :invites
+          id: 5,
+          kind: 'public_event',
+          title: 'Party',
+          description: 'Blackout 1 love',
+          place: place,
+          date: '2017-9-30',
+          time: '23:36',
+          author: author,
+          people_attend_count: 4,
+          people_attend: :people_attend,
+          invites: :invites
       end
     end
   end

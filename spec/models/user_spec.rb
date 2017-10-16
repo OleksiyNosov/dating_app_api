@@ -19,13 +19,15 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to allow_value('test@test.com').for(:email) }
 
-  it { is_expected.to define_enum_for(:gender).with([:male, :female]) }
+  it { is_expected.to define_enum_for(:gender).with(%i[male female]) }
 
   it { is_expected.to have_attached_file :avatar }
 
-  it { is_expected.to validate_attachment_content_type(:avatar).
-              allowing('image/png', 'image/gif').
-              rejecting('text/plain', 'text/xml') }
+  it {
+    is_expected.to validate_attachment_content_type(:avatar)
+      .allowing('image/png', 'image/gif')
+      .rejecting('text/plain', 'text/xml')
+  }
 
   describe 'create_auth_token' do
     let(:value) { 'XXXX-YYYY-ZZZZ' }
@@ -42,13 +44,13 @@ RSpec.describe User, type: :model do
 
     before { expect(SecureRandom).to receive(:uuid).and_return(value) }
 
-    before do 
+    before do
       #
       # Time.zone.now -> created_at_time
       #
       expect(Time).to receive(:zone) do
         double.tap { |a| expect(a).to receive(:now).and_return(created_at_time) }
-      end 
+      end
     end
 
     before { expect(created_at_time).to receive(:+).with(valid_token_time).and_return(expired_at_time) }

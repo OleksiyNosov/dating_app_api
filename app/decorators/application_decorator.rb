@@ -1,14 +1,14 @@
 class ApplicationDecorator < Draper::Decorator
-  def as_json *args
+  def as_json *_args
     super only: _only, methods: _methods
   end
 
   private
   def _only
-    [] 
+    []
   end
 
-  def _methods 
-    [] 
+  def _methods
+    []
   end
 end

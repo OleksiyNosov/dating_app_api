@@ -18,13 +18,13 @@ RSpec.describe PlaceUser, type: :model do
 
     before { expect(subject).to receive(:place).and_return(place) }
 
-    before do 
+    before do
       #
       # -> place.place_users.average
       #
       expect(place).to receive(:place_users) do
         double.tap { |a| expect(a).to receive(:average).with(:rating).and_return(overall_rating) }
-      end 
+      end
     end
 
     before { expect(subject).to receive(:place).and_return(place) }

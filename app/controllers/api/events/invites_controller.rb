@@ -1,5 +1,5 @@
-class Api::Events::InvitesController < Api::InvitesController 
-  before_action -> { set_decorator_context(with_user: true) }, only: [:index, :show, :create]
+class Api::Events::InvitesController < Api::InvitesController
+  before_action -> { add_decorator_context(with_user: true) }, only: %i[index show create]
 
   private
   def build_resource

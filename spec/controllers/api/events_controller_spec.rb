@@ -24,11 +24,13 @@ RSpec.describe Api::EventsController, type: :controller do
   describe '#create' do
     let(:invites) { %w[15 20 30] }
 
-    let(:event_params) { {
-      place_id: '3', title: 'Party', description: 'Blackout 1 love',
-      kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
-      invites: invites
-    } }
+    let(:event_params) do
+      {
+        place_id: '3', title: 'Party', description: 'Blackout 1 love',
+        kind: 'public_event', start_time: '2017-09-29 23:10:20 +0300',
+        invites: invites
+      }
+    end
 
     let(:params) { { event: event_params } }
 
@@ -72,11 +74,13 @@ RSpec.describe Api::EventsController, type: :controller do
   describe '#collection' do
     let(:user) { stub_model User }
 
-    let(:params) { {
-      place_id: '3', title: 'Party', description: 'Blackout 1 love',
-      kind: 'public_event', start_time: "2017-09-29 23:10:20 +0300",
-      current_user: user
-    } }
+    let(:params) do
+      {
+        place_id: '3', title: 'Party', description: 'Blackout 1 love',
+        kind: 'public_event', start_time: '2017-09-29 23:10:20 +0300',
+        current_user: user
+      }
+    end
 
     before { sign_in user }
 

@@ -11,5 +11,5 @@ RSpec.describe Invite, type: :model do
 
   it { is_expected.to validate_presence_of :user }
 
-  it { is_expected.to define_enum_for(:respond).with([:no_respond, :attend, :not_attend]) }
+  it { is_expected.to define_enum_for(:respond).with(%i[no_respond attend not_attend]) }
 end
